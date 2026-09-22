@@ -1,0 +1,590 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 5: ACADEMY CONTROL ROOM
+   ----------------------------------------------------------------------------
+   The six days stop being six cards and become one connected hydraulic system:
+   SOURCE -> SEPARATION -> DAM -> RESERVOIR -> SLUICE -> WATERWHEEL -> SYSTEM.
+
+   Rendered DOM this targets (read from jsdom):
+     .academy-view
+       #gei-quick-access > button.gei-quick-button x5
+       header.academy-topbar (+ button#academy-mascot)
+       section.academy-hero.academy-waterwheel-hero
+       section.academy-path
+         .gei-path-header / .gei-path-progress / #gei-path-progress-status
+         .academy-day-grid.gei-hydraulic-path > a.academy-day-card.gei-stage-link
+         #gei-blueprint-status
+         #gei-dam-gate            <-- deliberately NOT styled here (Phase 9)
+       #academy-guide
+     .v1-53-academy-gate
+   .academy-progress-hub is injected at runtime by academy-progress-hub.js and so
+   is styled below even though jsdom never fetches it.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TOP BAR + QUICK ACCESS
+   -------------------------------------------------------------------------- */
+
+.academy-topbar {
+  gap: var(--v2-s3);
+  padding: var(--v2-s3) var(--v2-s2) !important;
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+.academy-topbar h1 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h1) !important;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--v2-text);
+}
+.academy-topbar p {
+  font-size: var(--v2-t-body) !important;
+  color: var(--v2-muted);
+}
+.academy-kicker {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+
+#academy-mascot.academy-mascot {
+  width: 62px;
+  height: 62px;
+  flex: 0 0 62px;
+  padding: 3px;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+}
+#academy-mascot:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+/* Quick access: an instrument action bar. */
+#gei-quick-access {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--v2-s2);
+  margin-bottom: var(--v2-s3);
+}
+.gei-quick-button {
+  display: grid !important;
+  place-content: center;
+  justify-items: center;
+  gap: 3px;
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s2) 2px !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-surface) !important;
+  color: var(--v2-muted) !important;
+  cursor: pointer;
+}
+.gei-quick-button:hover { border-color: var(--v2-wash-cyan-2); color: var(--v2-cyan); }
+.gei-quick-button:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.gei-quick-icon { font-size: 17px; line-height: 1; }
+.gei-quick-label {
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. HERO + WATERWHEEL
+   -------------------------------------------------------------------------- */
+
+.academy-hero.academy-waterwheel-hero {
+  gap: var(--v2-s4);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background:
+    linear-gradient(150deg, rgba(47, 210, 255, 0.09), rgba(61, 61, 234, 0.06) 60%, rgba(4, 5, 10, 0)),
+    var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+.academy-section-label {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+.academy-hero-copy h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--v2-text) !important;
+}
+.academy-hero-copy p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.academy-primary-action {
+  min-height: var(--v2-tap) !important;
+  font-size: var(--v2-t-body) !important;
+  border: var(--v2-bw) solid var(--v2-cyan) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18)) !important;
+  color: var(--v2-white) !important;
+  box-shadow: var(--v2-glow-flow);
+}
+.academy-primary-action:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+.academy-waterwheel-wrap {
+  padding: var(--v2-s2);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 12px),
+    var(--v2-void);
+}
+.academy-waterwheel-glow { display: none; }
+.academy-wheel-tap {
+  min-height: 44px !important;
+  font-size: var(--v2-t-small) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+  color: var(--v2-cyan) !important;
+}
+.academy-wheel-tap:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   3. THE HYDRAULIC PATH — six stages, one connected channel
+   -------------------------------------------------------------------------- */
+
+.gei-path-header { gap: var(--v2-s3); }
+.gei-path-title h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--v2-text) !important;
+}
+.academy-path-count,
+.gei-path-progress-summary strong {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 700;
+  color: var(--v2-cyan);
+}
+#gei-path-progress-label {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-muted);
+}
+
+.gei-path-progress {
+  height: 10px !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp) !important;
+  background:
+    repeating-linear-gradient(90deg, var(--v2-tick) 0 1px, transparent 1px 8px),
+    var(--v2-void) !important;
+  overflow: hidden;
+}
+#gei-path-progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan)) !important;
+  box-shadow: 0 0 14px rgba(47, 210, 255, 0.45);
+  transition: width var(--v2-d4) var(--v2-ease);
+}
+#gei-path-progress-status {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+/* --- single-column conduit, replacing the 2x3 card grid ------------------ */
+
+.academy-day-grid.gei-hydraulic-path {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-auto-rows: auto !important;
+  gap: 26px !important;
+  min-height: 0 !important;
+  padding-left: var(--v2-s3);
+}
+
+.academy-day-card.gei-stage-link {
+  position: relative;
+  display: grid;
+  gap: var(--v2-s2);
+  min-height: 0 !important;
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-left: 3px solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-1) !important;
+  color: var(--v2-text);
+  text-decoration: none;
+  transition: border-color var(--v2-d2) var(--v2-ease),
+              background var(--v2-d2) var(--v2-ease),
+              box-shadow var(--v2-d2) var(--v2-ease);
+}
+
+/* The conduit segment joining this stage to the next one. */
+.academy-day-card.gei-stage-link::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  bottom: -27px;
+  width: 3px;
+  height: 27px;
+  background: var(--v2-line);
+}
+.academy-day-card.gei-stage-link::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 11px;
+  height: 11px;
+  border: var(--v2-bw-struct) solid var(--v2-line);
+  border-radius: 50%;
+  background: var(--v2-void);
+}
+.academy-day-card.gei-stage-link:last-child::after { display: none; }
+
+/* --- states, driven entirely by the classes academy.js already sets ------- */
+
+.academy-day-card.is-active {
+  border-left-color: var(--v2-cyan) !important;
+  border-color: var(--v2-wash-cyan-2) !important;
+  background: var(--v2-elevated) !important;
+  box-shadow: var(--v2-shadow-2), var(--v2-glow-flow) !important;
+}
+.academy-day-card.is-active::before {
+  border-color: var(--v2-cyan);
+  background: var(--v2-cyan);
+  box-shadow: 0 0 12px rgba(47, 210, 255, 0.8);
+}
+
+.academy-day-card.is-complete {
+  border-left-color: var(--v2-success) !important;
+}
+.academy-day-card.is-complete::before {
+  border-color: var(--v2-success);
+  background: var(--v2-success);
+}
+.academy-day-card.is-complete::after {
+  background: linear-gradient(180deg, var(--v2-success), var(--v2-cyan));
+  box-shadow: 0 0 10px rgba(47, 210, 255, 0.35);
+}
+
+.academy-day-card.is-locked { opacity: 0.45; }
+.academy-day-card.is-locked::before { border-style: dashed; }
+
+.academy-day-card:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+/* --- stage card contents -------------------------------------------------- */
+
+.gei-stage-top {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s2);
+}
+.academy-day-number {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--v2-muted);
+}
+.gei-stage-icon { font-size: 20px; line-height: 1; }
+
+.academy-day-card h3 {
+  margin: 0;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--v2-text);
+}
+
+.academy-day-status {
+  justify-self: start;
+  padding: 3px var(--v2-s2);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+.academy-day-card.is-active .academy-day-status {
+  border-color: var(--v2-cyan);
+  color: var(--v2-cyan);
+}
+.academy-day-card.is-complete .academy-day-status {
+  border-color: var(--v2-success);
+  color: var(--v2-success);
+}
+
+.gei-stage-achievement {
+  display: flex;
+  align-items: center;
+  gap: var(--v2-s2);
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background: var(--v2-void) !important;
+  font-size: var(--v2-t-label) !important;
+}
+.gei-stage-achievement b {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted) !important;
+}
+.gei-stage-achievement strong {
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-muted) !important;
+}
+.gei-stage-achievement.is-earned { border-color: var(--v2-wash-cyan-2); }
+.gei-stage-achievement.is-earned b,
+.gei-stage-achievement.is-earned strong { color: var(--v2-cyan); }
+
+.gei-stage-flow { opacity: 0.45; }
+
+
+/* --------------------------------------------------------------------------
+   4. BLUEPRINT STATUS — a readout strip
+   -------------------------------------------------------------------------- */
+
+#gei-blueprint-status {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--v2-s2);
+  padding: var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+}
+#gei-blueprint-status span {
+  display: block;
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+#gei-blueprint-status strong {
+  display: block;
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 700;
+  color: var(--v2-cyan);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. RUNTIME-INJECTED PROGRESS HUB (academy-progress-hub.js)
+   -------------------------------------------------------------------------- */
+
+.academy-progress-hub {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-1) !important;
+}
+.academy-progress-kicker {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+.academy-progress-title {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.academy-progress-count {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  font-weight: 700;
+  color: var(--v2-cyan);
+}
+.academy-progress-track {
+  height: 10px !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp) !important;
+  background:
+    repeating-linear-gradient(90deg, var(--v2-tick) 0 1px, transparent 1px 8px),
+    var(--v2-void) !important;
+  overflow: hidden;
+}
+.academy-progress-fill {
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan)) !important;
+  box-shadow: 0 0 12px rgba(47, 210, 255, 0.4);
+}
+.academy-progress-next {
+  font-size: var(--v2-t-body) !important;
+  color: var(--v2-muted);
+}
+.academy-progress-next a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  color: var(--v2-cyan);
+  font-size: var(--v2-t-small) !important;
+  font-weight: 800;
+  text-decoration: none;
+}
+.academy-progress-next a:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+/* The six stages as a horizontal node strip. */
+.academy-progress-days {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--v2-s1) !important;
+}
+.academy-progress-day {
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  padding: var(--v2-s2) 2px !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-top: 2px solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background: var(--v2-elevated);
+}
+.academy-progress-day strong {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-muted);
+}
+.academy-progress-day span {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+  text-align: center;
+  line-height: 1.15;
+}
+.academy-progress-day.is-current {
+  border-top-color: var(--v2-cyan);
+  box-shadow: var(--v2-glow-flow);
+}
+.academy-progress-day.is-current strong,
+.academy-progress-day.is-current span { color: var(--v2-cyan); }
+.academy-progress-day.is-complete { border-top-color: var(--v2-success); }
+.academy-progress-day.is-complete strong,
+.academy-progress-day.is-complete span { color: var(--v2-success); }
+
+.academy-progress-complete {
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-success);
+  border-radius: var(--v2-r-instr);
+  background: rgba(34, 197, 94, 0.1);
+  font-size: var(--v2-t-small) !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--v2-success);
+  text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. ADAM GUIDE + DAM NAME GATE DIALOGS
+   -------------------------------------------------------------------------- */
+
+.academy-guide-card,
+.v1-53-gate-card {
+  width: min(100%, 460px) !important;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: var(--v2-s6) !important;
+  border: var(--v2-bw-struct) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-elevated) !important;
+  box-shadow: var(--v2-shadow-3) !important;
+  color: var(--v2-text);
+}
+.academy-guide-backdrop,
+.v1-53-gate-backdrop { background: rgba(4, 5, 10, 0.86) !important; }
+
+.academy-guide-copy h2,
+.v1-53-gate-card h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.academy-guide-copy p,
+.v1-53-gate-card p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.academy-guide-meta span {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted);
+}
+.academy-guide-meta b {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-body) !important;
+  color: var(--v2-cyan);
+}
+.academy-guide-action,
+.academy-guide-secondary,
+#v1-53-gate-save {
+  min-height: var(--v2-tap) !important;
+  font-size: var(--v2-t-body) !important;
+  border-radius: var(--v2-r-instr) !important;
+}
+.academy-guide-action:focus-visible,
+.academy-guide-secondary:focus-visible,
+#v1-53-gate-save:focus-visible,
+.academy-guide-close:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.academy-guide-close {
+  width: 44px;
+  height: 44px;
+  font-size: var(--v2-t-h3) !important;
+}
+.v1-53-gate-mascot { max-width: 96px; height: auto; }
+.v1-53-gate-card label { font-size: var(--v2-t-small) !important; color: var(--v2-muted); }
+.v1-53-gate-card small { font-size: var(--v2-t-label) !important; color: var(--v2-muted); }
+.v1-53-gate-input-row input {
+  min-height: var(--v2-tap);
+  font-size: var(--v2-t-body) !important;
+}
+.v1-53-gate-error { font-size: var(--v2-t-small) !important; color: var(--v2-danger); }
+
+
+/* --------------------------------------------------------------------------
+   7. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 420px) {
+  #gei-quick-access { gap: var(--v2-s1); }
+  .gei-quick-label { letter-spacing: 0.02em; }
+  .academy-day-grid.gei-hydraulic-path { gap: 24px !important; padding-left: var(--v2-s2); }
+  .academy-day-card.gei-stage-link::after { left: -11px; bottom: -25px; height: 25px; }
+  .academy-day-card.gei-stage-link::before { left: -16px; }
+  .academy-progress-days { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academy-day-card.gei-stage-link,
+  #gei-path-progress-fill { transition: none; }
+  .academy-wheel-rotor { animation: none !important; }
+}
