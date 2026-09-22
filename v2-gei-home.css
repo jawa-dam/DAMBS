@@ -1,0 +1,370 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 4: HOME
+   ----------------------------------------------------------------------------
+   The entrance. Selectors below were read from the rendered DOM:
+     .dashboard-header > (.eyebrow, h1 > img.home-gei-logo, p) + #member-status
+     .dashboard-main   > .welcome-card (.welcome-copy + .mascot-orbit)
+                         .day1-preview-card
+                         .home-experience-stack > .home-product-card.v1-15-product-focus
+                                                  #gei-profile-card
+                                                  #gei-xp-card
+     .dashboard-footer
+   Note: home-product-focus.js (V1.15) deliberately strips .home-dam-card via a
+   MutationObserver, so no dam-release iframe exists on Home. That is existing
+   intended behaviour and is not restored here.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MASTHEAD — an instrument nameplate
+   -------------------------------------------------------------------------- */
+
+.dashboard-header {
+  align-items: center;
+  gap: var(--v2-s3);
+  padding: var(--v2-s3) var(--v2-s2) var(--v2-s2) !important;
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+
+.dashboard-header h1 {
+  margin: var(--v2-s2) 0 var(--v2-s1) !important;
+  font-size: var(--v2-t-h1) !important;
+}
+
+.home-gei-logo {
+  display: block;
+  width: auto;
+  max-width: 178px;
+  height: 46px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.dashboard-header p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+#member-status.member-status {
+  gap: var(--v2-s2);
+  padding: var(--v2-s2) var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--v2-text) !important;
+}
+
+.member-status-copy strong {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-small) !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--v2-text);
+}
+.member-status-copy small {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. MAIN COLUMN
+   -------------------------------------------------------------------------- */
+
+.dashboard-main {
+  gap: var(--v2-s3) !important;
+  padding: var(--v2-s3) var(--v2-s1) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---- Welcome / hero ---------------------------------------------------- */
+
+.welcome-card {
+  grid-template-columns: minmax(0, 1fr) 132px !important;
+  gap: var(--v2-s3) !important;
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background:
+    linear-gradient(150deg, rgba(47, 210, 255, 0.1), rgba(61, 61, 234, 0.07) 55%, rgba(4, 5, 10, 0)) ,
+    var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+
+.welcome-copy h2 {
+  margin: var(--v2-s2) 0 !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--v2-text);
+}
+.welcome-copy p {
+  max-width: none !important;
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+/* ---- Adam: framed instrument bay ---------------------------------------
+   Adam stays prominent and tappable. The bezel is a label rail, not a ring of
+   decoration, and it never overlaps the copy column. */
+
+.mascot-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--v2-s1);
+  min-height: 148px !important;
+  padding: var(--v2-s3) var(--v2-s2);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 12px),
+    var(--v2-void);
+}
+.mascot-orbit::before {
+  content: "GUIDE";
+  position: absolute;
+  top: var(--v2-s1);
+  left: var(--v2-s2);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--v2-cyan);
+  opacity: 0.8;
+}
+
+.mascot-ring { display: none; }
+
+.home-mascot-button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 96px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.home-mascot-button:focus-visible {
+  outline: 3px solid var(--v2-cyan);
+  outline-offset: 4px;
+  border-radius: var(--v2-r-instr);
+}
+
+.home-mascot-image,
+.gei-mascot-image {
+  display: block;
+  width: 100%;
+  max-width: 104px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55));
+}
+
+.mascot-caption {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--v2-cyan);
+}
+
+/* ---- Day 1 preview ------------------------------------------------------ */
+
+.day1-preview-card {
+  gap: var(--v2-s3);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-1) !important;
+}
+.day1-preview-copy strong {
+  display: block;
+  margin: var(--v2-s1) 0;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-lead);
+  font-weight: 700;
+  color: var(--v2-text);
+}
+.day1-preview-copy small {
+  font-size: var(--v2-t-small) !important;
+  line-height: 1.4;
+  color: var(--v2-muted);
+}
+.day1-preview-card audio {
+  width: 100%;
+  min-height: 42px;
+}
+
+/* ---- Experience stack ---------------------------------------------------- */
+
+.home-experience-stack { gap: var(--v2-s3) !important; }
+
+/* Store card: the 10px CTA label was below the readability floor. */
+.home-product-card {
+  min-height: 128px !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+.home-product-card img { height: 128px !important; }
+.home-product-cta { left: var(--v2-s4) !important; right: var(--v2-s4) !important; bottom: var(--v2-s3) !important; }
+.home-product-cta span {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+.home-product-cta b {
+  width: 38px !important;
+  height: 38px !important;
+  flex-basis: 38px !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-cyan) !important;
+  color: var(--v2-void) !important;
+}
+.home-product-card:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+/* ---- Profile + XP cards as readouts ------------------------------------- */
+
+#gei-profile-card.gei-profile-card,
+#gei-xp-card.gei-xp-card {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-1) !important;
+  color: var(--v2-text);
+}
+
+.gei-profile-kicker,
+.gei-xp-kicker {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-cyan);
+}
+.gei-profile-title,
+.gei-xp-title {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+
+.gei-profile-stats,
+.gei-xp-stats { gap: var(--v2-s2) !important; }
+
+.gei-profile-stat,
+.gei-xp-stat {
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+}
+.gei-profile-stat strong,
+.gei-xp-stat strong {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+.gei-profile-stat span,
+.gei-xp-stat span {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted);
+}
+
+.gei-xp-total,
+.gei-xp-score {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--v2-cyan);
+}
+
+.gei-profile-track,
+.gei-xp-track {
+  height: 10px !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp) !important;
+  background:
+    repeating-linear-gradient(90deg, var(--v2-tick) 0 1px, transparent 1px 8px),
+    var(--v2-void) !important;
+  overflow: hidden;
+}
+.gei-profile-fill,
+.gei-xp-fill {
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan)) !important;
+  box-shadow: 0 0 12px rgba(47, 210, 255, 0.4);
+}
+
+.gei-profile-footer p,
+.gei-xp-history {
+  font-size: var(--v2-t-small) !important;
+  line-height: 1.45;
+  color: var(--v2-muted);
+}
+.gei-profile-badge {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+}
+
+/* Dam Name identity row. */
+.v1-52-label { font-size: var(--v2-t-label) !important; letter-spacing: 0.12em; color: var(--v2-muted); }
+.v1-52-name {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-lead) !important;
+  color: var(--v2-cyan);
+}
+.v1-52-since { font-size: var(--v2-t-label) !important; color: var(--v2-muted); }
+.v1-52-edit,
+.v1-52-save {
+  min-height: 44px;
+  min-width: 44px;
+  font-size: var(--v2-t-small) !important;
+}
+#v1-52-help { font-size: var(--v2-t-label) !important; }
+.v1-52-avatar-option small { font-size: var(--v2-t-label) !important; }
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.dashboard-footer {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   3. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .welcome-card { grid-template-columns: minmax(0, 1fr) 112px !important; padding: var(--v2-s3) !important; }
+  .mascot-orbit { min-height: 132px !important; }
+  .home-mascot-image, .gei-mascot-image { max-width: 92px; }
+  .home-gei-logo { max-width: 150px; height: 40px; }
+  .home-product-card img { height: 112px !important; }
+}
+
+@media (min-width: 431px) {
+  .welcome-card { grid-template-columns: minmax(0, 1fr) 168px !important; }
+  .mascot-orbit { min-height: 176px !important; }
+  .home-mascot-image, .gei-mascot-image { max-width: 132px; }
+}
