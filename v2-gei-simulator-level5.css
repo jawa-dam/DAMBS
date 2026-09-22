@@ -1,0 +1,961 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — V1.63.34 LEVEL 5
+   ----------------------------------------------------------------------------
+   Scoped only to .gei-level5. The wheel is the primary instrument: water
+   input becomes motion, and motion becomes useful work.
+   ========================================================================== */
+
+.gei-level5 {
+  --level5-cyan: var(--v2-cyan);
+  --level5-foam: var(--v2-cyan-foam);
+  --level5-pressure: var(--v2-magenta);
+  --level5-structure: var(--v2-indigo);
+  --level5-success: var(--v2-success);
+  --level5-warning: var(--v2-warning);
+  --level5-danger: var(--v2-danger);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, var(--v2-wash-cyan), transparent 30%),
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 32px),
+    var(--v2-void);
+  color: var(--v2-text);
+  font-family: var(--v2-font-body);
+}
+
+.gei-level5::before {
+  content: "LEVEL 5 / WATERWHEEL PROTOCOL";
+  position: absolute;
+  right: var(--v2-s6);
+  bottom: var(--v2-s4);
+  z-index: 0;
+  color: var(--v2-tick);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  pointer-events: none;
+}
+
+.gei-level5-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--v2-s3);
+  width: min(1320px, 100%);
+  min-height: 100dvh;
+  box-sizing: border-box;
+  margin: auto;
+  padding: var(--v2-s4) var(--v2-s6);
+}
+
+.gei-level5 button,
+.gei-level5 input {
+  font-family: var(--v2-font-display);
+}
+
+.gei-level5-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s4);
+  padding-bottom: var(--v2-s3);
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+
+.gei-level5-brand {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: var(--v2-s3);
+}
+
+.gei-level5-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  box-sizing: border-box;
+  border: var(--v2-bw-struct) solid var(--level5-structure);
+  border-radius: var(--v2-r-sharp);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 8px),
+    var(--v2-surface);
+  color: var(--level5-foam);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  box-shadow: var(--v2-glow-release);
+}
+
+.gei-level5-kicker,
+.gei-level5-eyebrow {
+  display: block;
+  color: var(--level5-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  line-height: 1.3;
+}
+
+.gei-level5-brand strong {
+  display: block;
+  margin-top: var(--v2-s1);
+  color: var(--v2-text);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-lead);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.gei-level5-top-actions,
+.gei-level5-control-grid {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--v2-s2);
+}
+
+.gei-level5-top-actions button,
+.gei-level5-footer button,
+.gei-level5-complete-card button,
+.gei-level5-control-grid button,
+.gei-level5-objective button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: var(--v2-tap);
+  box-sizing: border-box;
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+}
+
+.gei-level5-top-actions button:hover,
+.gei-level5-footer button:hover,
+.gei-level5-control-grid button:hover,
+.gei-level5-objective button:hover {
+  border-color: var(--level5-cyan);
+  color: var(--level5-cyan);
+}
+
+.gei-level5 button:disabled {
+  border-color: var(--v2-line);
+  background: var(--v2-void);
+  color: var(--v2-muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.gei-level5 button.primary {
+  border-color: var(--level5-cyan);
+  background: var(--v2-wash-cyan-2);
+  color: var(--level5-foam);
+}
+
+.gei-level5 button.primary:hover {
+  background: var(--v2-cyan-deep);
+  color: var(--v2-white);
+}
+
+.gei-level5-top-actions button:focus-visible,
+.gei-level5-footer button:focus-visible,
+.gei-level5 button:focus-visible {
+  outline: 3px solid var(--level5-cyan);
+  outline-offset: 3px;
+}
+
+.gei-level5-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr);
+  gap: var(--v2-s3);
+  min-height: 0;
+}
+
+.gei-level5-field,
+.gei-level5-missions {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: var(--v2-bw-struct) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background:
+    linear-gradient(135deg, var(--v2-wash-cyan), transparent 34%),
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 22px),
+    var(--v2-surface);
+  box-shadow: var(--v2-shadow-2);
+}
+
+.gei-level5-field::before,
+.gei-level5-missions::before {
+  content: "";
+  position: absolute;
+  inset: var(--v2-s2);
+  border: var(--v2-bw) solid var(--v2-hairline-2);
+  pointer-events: none;
+}
+
+.gei-level5-field {
+  display: grid;
+  grid-template-rows: auto auto minmax(240px, 1fr) auto auto auto;
+  gap: var(--v2-s3);
+  padding: var(--v2-s4);
+}
+
+.gei-level5-field-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--v2-s4);
+}
+
+.gei-level5-field h1 {
+  max-width: 18ch;
+  margin: var(--v2-s2) 0;
+  color: var(--v2-text);
+  font-family: var(--v2-font-display);
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.gei-level5-field h1 span {
+  color: var(--level5-cyan);
+}
+
+.gei-level5-field p,
+.gei-level5-objective p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--v2-muted);
+  font-size: var(--v2-t-body);
+  line-height: var(--v2-lh-body);
+}
+
+.gei-level5-command-readout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(84px, 1fr));
+  flex: 0 0 220px;
+  gap: var(--v2-s2);
+}
+
+.gei-level5-command-readout div {
+  padding: var(--v2-s2);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+  text-align: right;
+}
+
+.gei-level5-command-readout span,
+.gei-level5-telemetry-cell > span,
+.gei-level5-objective-note {
+  display: block;
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+}
+
+.gei-level5-command-readout strong {
+  display: block;
+  margin-top: var(--v2-s1);
+  color: var(--level5-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-h2);
+  font-variant-numeric: tabular-nums;
+}
+
+.gei-level5-command-readout div + div strong {
+  color: var(--level5-pressure);
+}
+
+.gei-level5-telemetry {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--v2-s2);
+}
+
+.gei-level5-telemetry-cell {
+  min-width: 0;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+}
+
+.gei-level5-telemetry-cell strong {
+  display: block;
+  margin-top: var(--v2-s1);
+  color: var(--v2-text);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-h3);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.gei-level5-telemetry-cell.head strong,
+.gei-level5-telemetry-cell.speed strong,
+.gei-level5-telemetry-cell.output strong {
+  color: var(--level5-cyan);
+}
+
+.gei-level5-telemetry-cell.flow strong,
+.gei-level5-telemetry-cell.load strong {
+  color: var(--level5-pressure);
+}
+
+.gei-level5-telemetry-cell.state strong {
+  color: var(--level5-success);
+}
+
+.gei-level5-telemetry-cell small {
+  display: block;
+  min-height: 1.4em;
+  margin-top: var(--v2-s2);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  line-height: 1.35;
+}
+
+.gei-level5-meter {
+  height: 8px;
+  margin-top: var(--v2-s3);
+  overflow: hidden;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-pill);
+  background: var(--v2-surface);
+}
+
+.gei-level5-meter span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--level5-pressure);
+  transition: width var(--v2-d2) var(--v2-ease);
+}
+
+.gei-level5-wheel-visual {
+  position: relative;
+  z-index: 1;
+  min-height: 250px;
+  overflow: hidden;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background:
+    linear-gradient(180deg, var(--v2-wash-indigo), transparent 65%),
+    var(--v2-void);
+}
+
+.gei-level5-schematic-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 24px);
+}
+
+.gei-level5-water-channel {
+  position: absolute;
+  top: 43%;
+  width: 25%;
+  height: 38px;
+  border: var(--v2-bw-struct) solid var(--level5-cyan);
+  background: var(--v2-wash-cyan);
+  box-shadow: var(--v2-glow-flow);
+}
+
+.gei-level5-water-channel::after {
+  content: "→ → →";
+  position: absolute;
+  top: 50%;
+  color: var(--level5-foam);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  transform: translateY(-50%);
+}
+
+.gei-level5-water-channel span {
+  position: absolute;
+  top: -24px;
+  color: var(--level5-foam);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.gei-level5-water-channel-left {
+  left: 4%;
+  border-right: 0;
+  border-radius: var(--v2-r-instr) 0 0 var(--v2-r-instr);
+}
+
+.gei-level5-water-channel-left::after { right: 10%; }
+.gei-level5-water-channel-left span { left: 0; }
+
+.gei-level5-water-channel-right {
+  right: 4%;
+  border-left: 0;
+  border-color: var(--level5-success);
+  background: rgba(34, 197, 94, 0.08);
+  border-radius: 0 var(--v2-r-instr) var(--v2-r-instr) 0;
+}
+
+.gei-level5-water-channel-right::after {
+  right: 10%;
+  color: var(--level5-success);
+}
+
+.gei-level5-water-channel-right span {
+  right: 0;
+  color: var(--level5-success);
+}
+
+.gei-level5-wheel-housing {
+  position: absolute;
+  top: 18%;
+  left: calc(50% - 82px);
+  display: grid;
+  place-items: center;
+  width: 164px;
+  height: 164px;
+  border: var(--v2-bw-struct) solid var(--level5-structure);
+  border-radius: var(--v2-r-pill);
+  background: var(--v2-surface);
+  box-shadow: var(--v2-shadow-2), var(--v2-glow-release);
+}
+
+.gei-level5-wheel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 126px;
+  height: 126px;
+  border: 10px solid var(--level5-cyan);
+  border-radius: var(--v2-r-pill);
+  background: repeating-radial-gradient(circle at center, var(--v2-wash-cyan) 0 8px, transparent 9px 18px), var(--v2-void);
+  transition: border-color var(--v2-d2) var(--v2-ease), box-shadow var(--v2-d2) var(--v2-ease);
+}
+
+.gei-level5-wheel.is-turning {
+  animation: gei-level5-wheel-turn 1.2s linear infinite;
+  box-shadow: var(--v2-glow-flow);
+}
+
+.gei-level5-wheel.is-tripped {
+  border-color: var(--level5-danger);
+  box-shadow: 0 0 22px rgba(255, 59, 92, 0.28);
+}
+
+.gei-level5-spoke {
+  position: absolute;
+  width: 6px;
+  height: 94px;
+  border-radius: var(--v2-r-pill);
+  background: var(--level5-cyan);
+}
+
+.gei-level5-spoke.spoke-two { transform: rotate(45deg); }
+.gei-level5-spoke.spoke-three { transform: rotate(90deg); }
+.gei-level5-spoke.spoke-four { transform: rotate(135deg); }
+
+.gei-level5-wheel-hub {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border: var(--v2-bw-struct) solid var(--level5-foam);
+  border-radius: var(--v2-r-pill);
+  background: var(--v2-indigo);
+}
+
+.gei-level5-output-shaft {
+  position: absolute;
+  top: 46%;
+  left: calc(50% + 76px);
+  width: 18%;
+  height: 10px;
+  border: var(--v2-bw) solid var(--level5-structure);
+  background: var(--v2-line);
+}
+
+.gei-level5-output-shaft span {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.gei-level5-output-shaft.is-working {
+  border-color: var(--level5-success);
+  background: var(--level5-success);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.24);
+}
+
+.gei-level5-load-belt {
+  position: absolute;
+  top: 33%;
+  right: 7%;
+  width: 7%;
+  height: 28%;
+  border: var(--v2-bw) solid var(--level5-pressure);
+  border-radius: var(--v2-r-instr);
+  background: repeating-linear-gradient(0deg, var(--v2-wash-magenta) 0 10px, transparent 10px 18px);
+}
+
+.gei-level5-load-belt span {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + var(--v2-s2));
+  color: var(--level5-pressure);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.gei-level5-visual-label {
+  position: absolute;
+  bottom: var(--v2-s3);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.gei-level5-visual-label.left { left: var(--v2-s3); }
+.gei-level5-visual-label.center { left: 50%; color: var(--level5-foam); transform: translateX(-50%); white-space: nowrap; }
+.gei-level5-visual-label.right { right: var(--v2-s3); color: var(--level5-success); }
+
+.gei-level5-control-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin: 0;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+}
+
+.gei-level5-control-panel legend {
+  padding: 0 var(--v2-s2);
+  color: var(--level5-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.gei-level5-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gei-level5-status {
+  position: relative;
+  z-index: 1;
+  min-height: var(--v2-tap);
+  box-sizing: border-box;
+  padding: var(--v2-s3);
+  border-left: 3px solid var(--level5-cyan);
+  background: var(--v2-wash-cyan);
+  color: var(--v2-text);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+.gei-level5[data-status="warning"] .gei-level5-status {
+  border-color: var(--level5-warning);
+  background: rgba(245, 165, 36, 0.1);
+}
+
+.gei-level5[data-status="danger"] .gei-level5-status,
+.gei-level5.is-tripped .gei-level5-status {
+  border-color: var(--level5-danger);
+  background: rgba(255, 59, 92, 0.1);
+}
+
+.gei-level5[data-status="success"] .gei-level5-status,
+.gei-level5[data-status="complete"] .gei-level5-status {
+  border-color: var(--level5-success);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.gei-level5-missions {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--v2-s3);
+  padding: var(--v2-s4);
+}
+
+.gei-level5-missions-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--v2-s3);
+  padding-bottom: var(--v2-s3);
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+
+.gei-level5-missions-head > div > span {
+  color: var(--level5-pressure);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+}
+
+.gei-level5-missions h2 {
+  margin: var(--v2-s1) 0 0;
+  color: var(--v2-text);
+  font-size: var(--v2-t-h2);
+  line-height: 1.15;
+}
+
+.gei-level5-missions-head > strong {
+  display: grid;
+  place-items: center;
+  min-width: 64px;
+  min-height: 48px;
+  padding: 0 var(--v2-s2);
+  border: var(--v2-bw) solid var(--level5-structure);
+  border-radius: var(--v2-r-instr);
+  color: var(--level5-foam);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-body);
+}
+
+.gei-level5-objective-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  gap: var(--v2-s2);
+  min-width: 0;
+  overflow: auto;
+  padding-right: var(--v2-s1);
+}
+
+.gei-level5-objective {
+  min-width: 0;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-left: 3px solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+}
+
+.gei-level5-objective.is-current { border-left-color: var(--level5-cyan); }
+.gei-level5-objective.is-complete { border-left-color: var(--level5-success); background: rgba(34, 197, 94, 0.06); }
+.gei-level5-objective.is-locked { opacity: 0.72; }
+
+.gei-level5-objective-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s2);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.gei-level5-objective-head b {
+  margin-left: var(--v2-s2);
+  color: var(--level5-pressure);
+}
+
+.gei-level5-objective-head strong { color: var(--level5-cyan); }
+.gei-level5-objective.is-complete .gei-level5-objective-head strong { color: var(--level5-success); }
+
+.gei-level5-objective h3 {
+  margin: var(--v2-s2) 0 var(--v2-s1);
+  color: var(--v2-text);
+  font-size: var(--v2-t-h3);
+  line-height: 1.2;
+}
+
+.gei-level5-objective-note {
+  margin-top: var(--v2-s3);
+  color: var(--level5-foam);
+}
+
+.gei-level5-objective button {
+  width: 100%;
+  margin-top: var(--v2-s3);
+}
+
+.gei-level5-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s3);
+  padding-top: var(--v2-s3);
+  border-top: var(--v2-bw) solid var(--v2-line);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.gei-level5-footer > strong {
+  min-width: 0;
+  color: var(--level5-cyan);
+  text-align: center;
+}
+
+.gei-level5-complete {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: var(--v2-s6);
+  box-sizing: border-box;
+  background: rgba(4, 5, 10, 0.88);
+}
+
+.gei-level5-complete[hidden] { display: none; }
+
+.gei-level5-complete-card {
+  width: min(560px, 100%);
+  box-sizing: border-box;
+  padding: var(--v2-s7);
+  border: var(--v2-bw-struct) solid var(--level5-cyan);
+  border-radius: var(--v2-r-panel);
+  background: var(--v2-surface);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-release);
+  text-align: center;
+}
+
+.gei-level5-complete-mark {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--v2-s4);
+  border: var(--v2-bw-struct) solid var(--level5-cyan);
+  border-radius: var(--v2-r-pill);
+  color: var(--level5-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.gei-level5-complete-kicker {
+  color: var(--level5-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+}
+
+.gei-level5-complete-card h2 {
+  margin: var(--v2-s2) 0;
+  color: var(--v2-text);
+  font-size: var(--v2-t-h2);
+}
+
+.gei-level5-complete-card p {
+  margin: 0;
+  color: var(--v2-muted);
+  font-size: var(--v2-t-body);
+  line-height: var(--v2-lh-body);
+}
+
+.gei-level5-complete-card > strong {
+  display: inline-block;
+  margin-top: var(--v2-s4);
+  padding: var(--v2-s3) var(--v2-s4);
+  border: var(--v2-bw) solid var(--level5-structure);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-wash-indigo);
+  color: var(--level5-foam);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-h3);
+}
+
+.gei-level5-complete-card button {
+  width: 100%;
+  margin-top: var(--v2-s5);
+  border-color: var(--level5-cyan);
+  background: linear-gradient(150deg, var(--level5-cyan), var(--level5-structure));
+  color: var(--v2-white);
+  box-shadow: var(--v2-glow-flow);
+}
+
+@keyframes gei-level5-wheel-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1024px) {
+  .gei-level5 {
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .gei-level5-shell { min-height: 100dvh; }
+
+  .gei-level5-main {
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .gei-level5-shell {
+    gap: var(--v2-s3);
+    padding: var(--v2-s3);
+  }
+
+  .gei-level5-top,
+  .gei-level5-field-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gei-level5-top-actions { width: 100%; }
+  .gei-level5-top-actions button { flex: 1 1 0; }
+
+  .gei-level5-main { grid-template-columns: minmax(0, 1fr); }
+
+  .gei-level5-field,
+  .gei-level5-missions { padding: var(--v2-s3); }
+
+  .gei-level5-command-readout {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .gei-level5-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gei-level5-footer > strong { text-align: left; }
+  .gei-level5-footer button { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .gei-level5::before { display: none; }
+
+  .gei-level5-mark {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .gei-level5-brand strong { font-size: var(--v2-t-body); }
+
+  .gei-level5-telemetry { grid-template-columns: minmax(0, 1fr); }
+
+  .gei-level5-telemetry-cell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--v2-s2);
+  }
+
+  .gei-level5-telemetry-cell strong {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .gei-level5-telemetry-cell small {
+    grid-column: 1 / -1;
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  .gei-level5-meter {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .gei-level5-control-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .gei-level5-wheel-visual { min-height: 230px; }
+
+  .gei-level5-complete-card { padding: var(--v2-s5); }
+}
+
+@media (max-width: 360px) {
+  .gei-level5-top-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gei-level5-wheel-housing {
+    left: calc(50% - 68px);
+    width: 136px;
+    height: 136px;
+  }
+
+  .gei-level5-wheel {
+    width: 104px;
+    height: 104px;
+  }
+
+  .gei-level5-spoke { height: 78px; }
+  .gei-level5-field h1 { font-size: 30px; }
+  .gei-level5-visual-label.center { font-size: var(--v2-t-micro); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gei-level5 *,
+  .gei-level5-complete-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}
