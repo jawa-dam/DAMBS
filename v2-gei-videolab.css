@@ -1,0 +1,657 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 8: VIDEO LAB
+   ----------------------------------------------------------------------------
+   One research workflow: watch -> observe -> question -> reflect -> continue.
+   Targets the rendered #video-root:
+     .video-lab
+       header.video-header (span.video-eyebrow, h1, p + .video-logo)
+       button#video-adam-open.video-adam-guide
+       article.video-feature.gei-video-feature
+         .gei-video-player-wrap > iframe.gei-video-player
+         .gei-video-feature-copy (span.video-label, h2, p, a.gei-video-watch-link)
+       section.gei-video-learning
+         .gei-video-section-head / .gei-video-observation-grid / .gei-video-connection
+       section.video-library (.video-section-head + .video-cards > .video-card)
+       button#music-lab-open.music-lab-entry
+     #video-adam-modal > .video-adam-panel
+     #music-lab-modal  > .music-lab-panel
+
+   NOTE ON .gei-video-intelligence: this section is styled below, but it does not
+   currently mount. v1-63-16-gei-video-lab-intelligence.js calls
+   root.insertBefore(section, connection) where connection.parentNode is
+   .gei-video-learning, not #video-root, so the call throws NotFoundError and the
+   reflection / saved-notes UI never appears. Verified, reported, not silently
+   patched. The styles are here so it is correct the moment it mounts.
+   ========================================================================== */
+
+.video-lab { gap: var(--v2-s4) !important; }
+
+/* --------------------------------------------------------------------------
+   1. HEADER + ADAM
+   -------------------------------------------------------------------------- */
+
+.video-header {
+  gap: var(--v2-s3);
+  padding: var(--v2-s3) var(--v2-s2) !important;
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+.video-header h1 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h1) !important;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--v2-text);
+}
+.video-header p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.video-eyebrow {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+.video-logo img { max-width: 76px; height: 52px; object-fit: contain; }
+
+.video-adam-guide {
+  gap: var(--v2-s3);
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.video-adam-guide:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+.video-adam-ring { display: none; }
+.video-adam-image {
+  width: 56px !important;
+  height: 56px !important;
+  flex: 0 0 56px;
+  padding: 3px;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+  object-fit: contain;
+}
+.video-adam-copy { display: grid; gap: 2px; text-align: left; }
+.video-adam-copy small {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.12em;
+  color: var(--v2-cyan);
+}
+.video-adam-copy strong {
+  font-size: var(--v2-t-body) !important;
+  color: var(--v2-text) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. FEATURED VIDEO
+   -------------------------------------------------------------------------- */
+
+.video-feature.gei-video-feature {
+  gap: var(--v2-s4);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+.gei-video-player-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+}
+.gei-video-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-label {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  text-transform: uppercase;
+  color: var(--v2-cyan);
+}
+.gei-video-feature-copy h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  color: var(--v2-text);
+}
+.gei-video-feature-copy p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.gei-video-watch-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) var(--v2-s5);
+  border: var(--v2-bw) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18));
+  color: var(--v2-white);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: var(--v2-glow-flow);
+}
+.gei-video-watch-link:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+
+/* --------------------------------------------------------------------------
+   3. VIEWING GUIDE
+   -------------------------------------------------------------------------- */
+
+.gei-video-learning,
+.video-library {
+  gap: var(--v2-s4);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+}
+.gei-video-section-head h2,
+.video-section-head h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--v2-text);
+}
+.gei-video-section-head p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.video-section-head span {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-cyan);
+}
+
+.gei-video-observation-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: var(--v2-s3) !important;
+}
+.gei-video-observation-card {
+  display: grid;
+  gap: var(--v2-s2);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-left: 3px solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+}
+.gei-video-observation-card > span {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  font-weight: 700;
+  color: var(--v2-cyan);
+}
+.gei-video-observation-card b {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--v2-text);
+}
+.gei-video-observation-card p {
+  margin: 0;
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+.gei-video-connection {
+  gap: var(--v2-s4);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+}
+.gei-video-connection h3 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--v2-text);
+}
+.gei-video-connection p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.gei-video-academy-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) var(--v2-s5);
+  border: var(--v2-bw) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  color: var(--v2-cyan);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  text-decoration: none;
+}
+.gei-video-academy-link:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   4. VIDEO INTELLIGENCE (reflection + saved notes)
+   Styled and ready. See the header note: this section does not currently mount.
+   -------------------------------------------------------------------------- */
+
+.gei-video-intelligence {
+  display: grid;
+  gap: var(--v2-s4);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw-struct) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+.gei-video-intelligence-head h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.gei-video-intelligence-head p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.gei-video-input-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: var(--v2-s3) !important;
+}
+.gei-video-input-card {
+  display: grid;
+  gap: var(--v2-s2);
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+}
+.gei-video-input-number {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-cyan);
+}
+.gei-video-input-card strong {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--v2-text);
+}
+.gei-video-input-card small {
+  font-size: var(--v2-t-small) !important;
+  line-height: 1.4;
+  color: var(--v2-muted);
+}
+.gei-video-input-card textarea {
+  width: 100%;
+  min-height: 108px;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+  color: var(--v2-text);
+  font-family: var(--v2-font-body);
+  font-size: var(--v2-t-body) !important;
+  line-height: 1.45;
+  resize: vertical;
+}
+.gei-video-input-card textarea:focus-visible {
+  outline: 3px solid var(--v2-cyan);
+  outline-offset: 1px;
+  border-color: var(--v2-cyan);
+}
+.gei-video-count {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-muted);
+  text-align: right;
+}
+.gei-video-intelligence-footer { gap: var(--v2-s3); }
+.gei-video-save-status {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-success);
+}
+.gei-video-save {
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s3) var(--v2-s5);
+  border: var(--v2-bw) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18));
+  color: var(--v2-white);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+}
+.gei-video-save:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+.gei-video-continue {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) var(--v2-s5);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  color: var(--v2-text);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  text-decoration: none;
+}
+.gei-video-continue:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   5. MEDIA LIBRARY + MUSIC LAB ENTRY
+   -------------------------------------------------------------------------- */
+
+.video-cards {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: var(--v2-s3) !important;
+}
+.video-card {
+  gap: var(--v2-s3);
+  padding: var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+}
+.video-thumb {
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-void);
+}
+.video-card-meta {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-cyan);
+}
+.video-card h3 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+/* Was 10px. */
+.video-card p {
+  font-size: var(--v2-t-small) !important;
+  line-height: 1.45 !important;
+  color: var(--v2-muted);
+}
+
+/* Was 8px -- the second-smallest text in the product. */
+.music-lab-entry {
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background:
+    linear-gradient(150deg, rgba(243, 16, 186, 0.12), rgba(4, 5, 10, 0)),
+    var(--v2-surface) !important;
+  cursor: pointer;
+}
+.music-lab-entry:focus-visible { outline: 3px solid var(--v2-magenta); outline-offset: 3px; }
+.music-lab-entry small {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.14em;
+  color: var(--v2-magenta);
+}
+.music-lab-entry strong {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.music-lab-entry b {
+  font-size: var(--v2-t-small) !important;
+  font-weight: 800;
+  color: var(--v2-cyan);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. MODALS
+   -------------------------------------------------------------------------- */
+
+.video-adam-modal,
+.music-lab-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--v2-s4);
+  background: rgba(4, 5, 10, 0.86);
+}
+.video-adam-modal[hidden],
+.music-lab-modal[hidden] { display: none; }
+
+.video-adam-panel,
+.music-lab-panel {
+  width: min(100%, 480px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: var(--v2-s6) !important;
+  border: var(--v2-bw-struct) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-elevated) !important;
+  box-shadow: var(--v2-shadow-3) !important;
+  color: var(--v2-text);
+}
+.video-adam-hero img { max-width: 96px; height: auto; }
+.video-adam-kicker {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+.video-adam-panel h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.video-adam-panel p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+.video-adam-close {
+  width: 44px;
+  height: 44px;
+  font-size: var(--v2-t-h3) !important;
+}
+.video-adam-close:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.video-adam-action {
+  width: 100%;
+  min-height: var(--v2-tap) !important;
+  border: var(--v2-bw) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18));
+  color: var(--v2-white);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+}
+.video-adam-action:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+/* ---- Music lab ---- */
+.music-lab-head h2 {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  color: var(--v2-text);
+}
+.music-lab-head span {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.12em;
+  color: var(--v2-cyan);
+}
+.music-lab-head p {
+  font-size: var(--v2-t-small) !important;
+  color: var(--v2-muted);
+}
+#music-lab-close {
+  width: 44px;
+  height: 44px;
+  font-size: var(--v2-t-h3);
+}
+#music-lab-close:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+.music-now {
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+}
+.music-now small {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.12em;
+  color: var(--v2-muted);
+}
+.music-now strong {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-lead) !important;
+  color: var(--v2-text);
+}
+#music-group {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-magenta);
+}
+.music-disc { color: var(--v2-cyan); }
+
+.music-controls button,
+.music-play {
+  min-width: var(--v2-tap);
+  min-height: var(--v2-tap);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+  color: var(--v2-text);
+  font-size: 18px;
+  cursor: pointer;
+}
+.music-controls button:focus-visible,
+.music-play:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.music-play {
+  border-color: var(--v2-cyan);
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.22), rgba(61, 61, 234, 0.2));
+  color: var(--v2-white);
+}
+
+.music-progress {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-muted);
+}
+#music-seek { min-height: 32px; accent-color: #2fd2ff; }
+
+.music-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v2-s2);
+}
+.music-filters button {
+  min-height: 40px;
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background: var(--v2-surface);
+  color: var(--v2-muted);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.music-filters button.is-active {
+  border-color: var(--v2-cyan);
+  color: var(--v2-cyan);
+  background: rgba(47, 210, 255, 0.1);
+}
+.music-filters button:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+.music-track {
+  display: grid !important;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--v2-s3);
+  width: 100%;
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+  color: var(--v2-text);
+  text-align: left;
+  cursor: pointer;
+}
+.music-track.is-current { border-color: var(--v2-wash-cyan-2); background: var(--v2-elevated); }
+.music-track:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.music-track-num {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-cyan);
+}
+.music-track strong {
+  font-size: var(--v2-t-body) !important;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+.music-track small {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted);
+}
+.music-track b {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-cyan);
+}
+
+
+/* --------------------------------------------------------------------------
+   7. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 420px) {
+  .video-adam-guide { padding: var(--v2-s3) !important; }
+  .video-adam-image { width: 48px !important; height: 48px !important; flex-basis: 48px; }
+  .gei-video-intelligence-footer { flex-direction: column; align-items: stretch; }
+  .gei-video-save, .gei-video-continue { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-disc { animation: none !important; }
+}
