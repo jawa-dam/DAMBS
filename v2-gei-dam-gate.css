@@ -1,0 +1,867 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 9: DAM GATE THRESHOLD
+   ----------------------------------------------------------------------------
+   Visual layer only. The V1.63.27 completion gate and V1.63.28 ceremony own
+   every state transition, persistence write, XP transaction and event. This
+   sheet turns their existing DOM into a measured hydraulic threshold.
+
+   Sequence shown by the existing stateful DOM:
+     SIX-DAY BLUEPRINT -> 666 XP -> DAM GATE -> FLOW RELEASE -> SIMULATOR
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THRESHOLD PANEL — a structural dam wall, not a decorative card
+   -------------------------------------------------------------------------- */
+
+#screen-academy .gei-dam-gate {
+  --v2-gate-edge: var(--v2-cyan);
+  --v2-gate-pressure: var(--v2-magenta);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: var(--v2-s6);
+  padding: var(--v2-s6);
+  border: var(--v2-bw-struct) solid var(--v2-cyan-deep);
+  border-radius: var(--v2-r-sharp);
+  background:
+    linear-gradient(135deg, var(--v2-wash-cyan), transparent 36%),
+    linear-gradient(315deg, var(--v2-wash-indigo), transparent 46%),
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 24px),
+    var(--v2-void);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-flow);
+}
+
+#screen-academy .gei-dam-gate::before {
+  content: "";
+  position: absolute;
+  inset: var(--v2-s2);
+  z-index: -1;
+  border: var(--v2-bw) solid var(--v2-hairline-2);
+  border-radius: var(--v2-r-sharp);
+  pointer-events: none;
+}
+
+#screen-academy .gei-dam-gate::after {
+  content: "PRESSURE / 666 XP";
+  position: absolute;
+  top: var(--v2-s3);
+  right: var(--v2-s4);
+  z-index: 0;
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-micro);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--v2-tick);
+  pointer-events: none;
+}
+
+#screen-academy .gei-dam-gate-glow {
+  position: absolute;
+  width: 46%;
+  height: 180px;
+  right: -10%;
+  top: -72px;
+  z-index: -1;
+  border-radius: var(--v2-r-pill);
+  background: radial-gradient(ellipse, var(--v2-wash-cyan-2), transparent 68%);
+  filter: blur(18px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+#screen-academy .gei-dam-gate-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--v2-s4);
+  padding-bottom: var(--v2-s4);
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+
+#screen-academy .gei-dam-gate-top .academy-section-label {
+  display: block;
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 700;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan) !important;
+}
+
+#screen-academy .gei-dam-gate h2 {
+  margin: var(--v2-s2) 0 0;
+  font-family: var(--v2-font-display);
+  font-size: clamp(32px, 7vw, 54px) !important;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: var(--v2-lh-tight);
+  color: var(--v2-text);
+}
+
+#screen-academy .gei-dam-gate-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--v2-s2);
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: var(--v2-s2) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-pill);
+  background: var(--v2-surface);
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+#screen-academy .gei-dam-gate-state::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border: var(--v2-bw) solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+}
+
+#screen-academy .gei-dam-gate.is-eligible:not(.is-unlocked) {
+  --v2-gate-edge: var(--v2-magenta);
+  border-color: var(--v2-magenta);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-pressure);
+}
+
+#screen-academy .gei-dam-gate.is-eligible:not(.is-unlocked) .gei-dam-gate-state {
+  border-color: var(--v2-magenta);
+  background: var(--v2-wash-magenta);
+  color: var(--v2-magenta);
+}
+
+#screen-academy .gei-dam-gate.is-unlocked {
+  --v2-gate-edge: var(--v2-cyan);
+  border-color: var(--v2-cyan);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-release);
+}
+
+#screen-academy .gei-dam-gate.is-unlocked .gei-dam-gate-state {
+  border-color: var(--v2-cyan);
+  background: var(--v2-wash-cyan);
+  color: var(--v2-cyan);
+}
+
+#screen-academy .gei-dam-gate.is-unlocked .gei-dam-gate-state::before {
+  background: var(--v2-cyan);
+  box-shadow: var(--v2-glow-flow);
+}
+
+/* --------------------------------------------------------------------------
+   2. GATE CHAMBER — the icon becomes an engineering diagram
+   -------------------------------------------------------------------------- */
+
+#screen-academy .gei-dam-gate-body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(116px, 0.34fr) minmax(0, 1fr);
+  gap: var(--v2-s6);
+  align-items: center;
+  margin-top: var(--v2-s6);
+}
+
+#screen-academy .gei-dam-gate-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 156px;
+  box-sizing: border-box;
+  border: var(--v2-bw-struct) solid var(--v2-cyan-deep);
+  border-radius: var(--v2-r-sharp);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 12px),
+    var(--v2-surface);
+  overflow: hidden;
+  color: transparent;
+  font-size: var(--v2-t-micro);
+  line-height: 1;
+  text-indent: -9999px;
+  box-shadow: inset 0 0 0 var(--v2-s2) var(--v2-void), var(--v2-glow-flow);
+}
+
+/* Upright gate leaf with measurement ribs. */
+#screen-academy .gei-dam-gate-icon::before {
+  content: "";
+  position: absolute;
+  inset: var(--v2-s4) var(--v2-s6) var(--v2-s6);
+  border: var(--v2-bw-struct) solid var(--v2-cyan);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 15px, var(--v2-cyan-deep) 15px 16px),
+    linear-gradient(90deg, var(--v2-wash-cyan), var(--v2-wash-indigo));
+  box-shadow: inset 0 0 0 var(--v2-s2) var(--v2-void);
+}
+
+/* Lower channel and open-flow marker. */
+#screen-academy .gei-dam-gate-icon::after {
+  content: "";
+  position: absolute;
+  right: var(--v2-s4);
+  bottom: var(--v2-s4);
+  left: var(--v2-s4);
+  height: 14px;
+  border: var(--v2-bw) solid var(--v2-cyan);
+  background:
+    repeating-linear-gradient(90deg, var(--v2-cyan) 0 9px, transparent 9px 17px),
+    var(--v2-cyan-abyss);
+  box-shadow: 0 0 14px rgba(47, 210, 255, 0.28);
+}
+
+#screen-academy .gei-dam-gate-copy {
+  min-width: 0;
+}
+
+#screen-academy .gei-dam-gate-copy::before {
+  content: "SIX DAYS COMPLETE  /  666 XP ACHIEVED";
+  display: block;
+  margin-bottom: var(--v2-s3);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.35;
+  color: var(--v2-cyan);
+}
+
+#screen-academy .gei-dam-gate-copy strong {
+  display: block;
+  max-width: 46ch;
+  color: var(--v2-text);
+  font-size: var(--v2-t-lead) !important;
+  font-weight: 800;
+  line-height: var(--v2-lh-tight);
+}
+
+#screen-academy .gei-dam-gate-copy p {
+  max-width: 62ch;
+  margin: var(--v2-s3) 0 0;
+  color: var(--v2-muted);
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. REQUIREMENTS — two instrument readouts, one threshold
+   -------------------------------------------------------------------------- */
+
+#screen-academy .gei-dam-gate-checks {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--v2-s3);
+  margin-top: var(--v2-s6);
+  padding-top: var(--v2-s4);
+  border-top: var(--v2-bw) solid var(--v2-line);
+}
+
+#screen-academy .gei-dam-gate-check {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: var(--v2-s3);
+  align-items: center;
+  min-width: 0;
+  min-height: 76px;
+  box-sizing: border-box;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+}
+
+#screen-academy .gei-dam-gate-check > span:first-child {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  border: var(--v2-bw) solid var(--v2-muted);
+  border-radius: var(--v2-r-sharp);
+  overflow: hidden;
+  background: var(--v2-void);
+  color: transparent;
+  font-size: var(--v2-t-micro);
+  line-height: 1;
+  text-indent: -9999px;
+}
+
+#screen-academy .gei-dam-gate-check > span:first-child::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: var(--v2-bw) solid var(--v2-muted);
+  border-radius: 50%;
+}
+
+#screen-academy .gei-dam-gate-check b,
+#screen-academy .gei-dam-gate-check small {
+  display: block;
+  min-width: 0;
+}
+
+#screen-academy .gei-dam-gate-check b {
+  color: var(--v2-muted);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+#screen-academy .gei-dam-gate-check small {
+  margin-top: var(--v2-s1);
+  color: var(--v2-text);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+#screen-academy .gei-dam-gate-check.is-ready {
+  border-color: var(--v2-cyan-deep);
+  background: linear-gradient(135deg, var(--v2-wash-cyan), var(--v2-surface));
+}
+
+#screen-academy .gei-dam-gate-check.is-ready > span:first-child {
+  border-color: var(--v2-cyan);
+  background: var(--v2-cyan-abyss);
+  color: var(--v2-cyan);
+}
+
+#screen-academy .gei-dam-gate-check.is-ready > span:first-child::before {
+  content: "✓";
+  position: absolute;
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-lead);
+  font-weight: 800;
+  line-height: 1;
+  text-indent: 0;
+  color: var(--v2-cyan);
+}
+
+#screen-academy .gei-dam-gate-check.is-ready > span:first-child::after {
+  display: none;
+}
+
+#screen-academy .gei-dam-gate-check.is-ready b,
+#screen-academy .gei-dam-gate-check.is-ready small {
+  color: var(--v2-cyan);
+}
+
+/* --------------------------------------------------------------------------
+   4. FLOW ROUTE + ACTION — stateful handoff stays in the V1 DOM
+   -------------------------------------------------------------------------- */
+
+#screen-academy .gei-dam-gate-next {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--v2-s3);
+  align-items: center;
+  margin-top: var(--v2-s4);
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-left: var(--v2-bw-struct) solid var(--v2-gate-edge);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+}
+
+#screen-academy .gei-dam-gate-next::after {
+  content: "";
+  position: absolute;
+  right: var(--v2-s3);
+  bottom: var(--v2-s1);
+  left: var(--v2-s3);
+  height: 2px;
+  background: linear-gradient(90deg, var(--v2-gate-edge), transparent);
+  opacity: 0.8;
+}
+
+#screen-academy .gei-dam-gate-next span {
+  color: var(--v2-gate-edge);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+#screen-academy .gei-dam-gate-next strong {
+  min-width: 0;
+  color: var(--v2-text);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+  text-align: right;
+}
+
+#screen-academy .gei-dam-gate-action-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--v2-s4);
+  padding-top: var(--v2-s4);
+  border-top: var(--v2-bw) solid var(--v2-line);
+}
+
+#screen-academy .gei-dam-gate-open {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s3);
+  width: 100%;
+  min-height: 60px;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: var(--v2-s3) var(--v2-s4);
+  border: var(--v2-bw-struct) solid var(--v2-magenta);
+  border-radius: var(--v2-r-instr);
+  background: linear-gradient(110deg, var(--v2-magenta), var(--v2-hotpink) 52%, var(--v2-indigo));
+  color: var(--v2-white);
+  box-shadow: var(--v2-glow-pressure);
+  font-family: var(--v2-font-display);
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--v2-d1) var(--v2-ease), box-shadow var(--v2-d2) var(--v2-ease), filter var(--v2-d2) var(--v2-ease);
+}
+
+#screen-academy .gei-dam-gate-open::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -35%;
+  width: 30%;
+  background: var(--v2-hairline);
+  transform: skewX(-20deg);
+  animation: v2-dam-flow-pass 3.8s var(--v2-ease) infinite;
+  pointer-events: none;
+}
+
+#screen-academy .gei-dam-gate-open span,
+#screen-academy .gei-dam-gate-open strong {
+  position: relative;
+  z-index: 1;
+  color: var(--v2-white);
+}
+
+#screen-academy .gei-dam-gate-open span {
+  font-size: var(--v2-t-body);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+#screen-academy .gei-dam-gate-open strong {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+#screen-academy .gei-dam-gate-open:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--v2-glow-release);
+  filter: brightness(1.08);
+}
+
+#screen-academy .gei-dam-gate-open:focus-visible,
+#screen-academy .gei-gate-ceremony-actions button:focus-visible,
+#screen-academy .gei-gate-simulator-link:focus-visible {
+  outline: 3px solid var(--v2-cyan);
+  outline-offset: 3px;
+}
+
+#screen-academy .gei-dam-gate-open:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. CEREMONY LAYER — confirmation and release, existing dialog semantics
+   -------------------------------------------------------------------------- */
+
+.gei-gate-ceremony {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: var(--v2-s4);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 28px),
+    rgba(4, 5, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gei-gate-ceremony-dialog {
+  position: relative;
+  width: min(100%, 520px);
+  max-height: calc(100dvh - var(--v2-s7));
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: var(--v2-s7);
+  border: var(--v2-bw-struct) solid var(--v2-cyan-deep);
+  border-radius: var(--v2-r-sharp);
+  background:
+    linear-gradient(135deg, var(--v2-wash-cyan), transparent 42%),
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 20px),
+    var(--v2-surface);
+  color: var(--v2-text);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-flow);
+  text-align: left;
+}
+
+.gei-gate-ceremony-dialog::before {
+  content: "GATE / 01";
+  display: block;
+  margin-bottom: var(--v2-s6);
+  padding-bottom: var(--v2-s2);
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+  color: var(--v2-tick);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.gei-gate-ceremony-dialog::after {
+  content: "";
+  position: absolute;
+  top: var(--v2-s7);
+  right: var(--v2-s7);
+  width: 46px;
+  height: 46px;
+  border: var(--v2-bw) solid var(--v2-cyan-deep);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-cyan-deep) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, var(--v2-cyan-deep) 0 1px, transparent 1px 8px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.gei-gate-ceremony-kicker {
+  display: block;
+  position: relative;
+  z-index: 1;
+  color: var(--v2-cyan);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+}
+
+.gei-gate-ceremony-dialog h2 {
+  position: relative;
+  z-index: 1;
+  margin: var(--v2-s2) 0 var(--v2-s3);
+  color: var(--v2-text);
+  font-family: var(--v2-font-display);
+  font-size: clamp(30px, 8vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: var(--v2-lh-tight);
+}
+
+.gei-gate-ceremony-dialog p {
+  position: relative;
+  z-index: 1;
+  max-width: 56ch;
+  margin: var(--v2-s3) 0;
+  color: var(--v2-muted);
+  font-size: var(--v2-t-body);
+  line-height: var(--v2-lh-body);
+}
+
+.gei-gate-ceremony-cost {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--v2-s1);
+  margin: var(--v2-s5) 0;
+  padding: var(--v2-s4);
+  border: var(--v2-bw) solid var(--v2-magenta);
+  border-left: var(--v2-bw-struct) solid var(--v2-magenta);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-wash-magenta);
+  color: var(--v2-magenta);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.gei-gate-ceremony-cost strong {
+  display: block;
+  color: var(--v2-white);
+  font-family: var(--v2-font-mono);
+  font-size: clamp(26px, 7vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.gei-gate-ceremony-actions {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--v2-s3);
+  margin-top: var(--v2-s6);
+}
+
+.gei-gate-ceremony-actions button {
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.gei-gate-keep {
+  background: var(--v2-elevated);
+  color: var(--v2-muted);
+}
+
+.gei-gate-open-confirm {
+  border-color: var(--v2-cyan) !important;
+  background: linear-gradient(150deg, var(--v2-cyan-abyss), var(--v2-indigo));
+  color: var(--v2-white);
+  box-shadow: var(--v2-glow-flow);
+}
+
+.gei-gate-ceremony-actions button:hover {
+  border-color: var(--v2-cyan);
+  color: var(--v2-text);
+}
+
+/* The release screen uses the same dialog, but its visual mark is a gate
+   chamber made from CSS so the supplied water glyph never becomes the motif. */
+.gei-gate-ceremony.is-success {
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 28px),
+    rgba(4, 5, 10, 0.78);
+}
+
+.gei-gate-success-dialog {
+  border-color: var(--v2-cyan);
+  box-shadow: var(--v2-shadow-3), var(--v2-glow-release);
+  text-align: center;
+  animation: v2-dam-release-in var(--v2-d4) var(--v2-ease) both;
+}
+
+.gei-gate-success-dialog::before {
+  content: "FLOW ROUTE / SIMULATOR WALL";
+  color: var(--v2-cyan);
+  text-align: left;
+}
+
+.gei-gate-success-mark {
+  position: relative;
+  display: block;
+  width: 112px;
+  height: 82px;
+  margin: 0 auto var(--v2-s5);
+  border: var(--v2-bw-struct) solid var(--v2-cyan);
+  border-radius: var(--v2-r-sharp);
+  background:
+    repeating-linear-gradient(0deg, var(--v2-grid-line) 0 1px, transparent 1px 12px),
+    var(--v2-cyan-abyss);
+  overflow: hidden;
+  color: transparent;
+  font-size: var(--v2-t-micro);
+  line-height: 1;
+  text-indent: -9999px;
+  box-shadow: var(--v2-glow-release);
+}
+
+.gei-gate-success-mark::before {
+  content: "";
+  position: absolute;
+  top: var(--v2-s3);
+  bottom: var(--v2-s3);
+  left: 25%;
+  width: 18%;
+  border: var(--v2-bw) solid var(--v2-cyan);
+  background: var(--v2-void);
+  transform: translateY(-8px);
+  animation: v2-dam-gate-lift var(--v2-d4) var(--v2-ease) both;
+}
+
+.gei-gate-success-mark::after {
+  content: "";
+  position: absolute;
+  right: var(--v2-s3);
+  bottom: var(--v2-s4);
+  left: 16%;
+  height: 12px;
+  border: var(--v2-bw) solid var(--v2-cyan-foam);
+  background: repeating-linear-gradient(90deg, var(--v2-cyan-foam) 0 10px, transparent 10px 18px);
+  animation: v2-dam-flow-pass 2.8s var(--v2-ease) infinite;
+}
+
+.gei-gate-success-dialog h2 {
+  font-size: clamp(32px, 8vw, 50px);
+}
+
+.gei-gate-success-copy {
+  max-width: 44ch !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  color: var(--v2-muted) !important;
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+}
+
+.gei-gate-simulator-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--v2-tap);
+  box-sizing: border-box;
+  margin-top: var(--v2-s4);
+  padding: var(--v2-s3) var(--v2-s4);
+  border: var(--v2-bw-struct) solid var(--v2-cyan);
+  border-radius: var(--v2-r-instr);
+  background: linear-gradient(150deg, var(--v2-cyan), var(--v2-indigo));
+  color: var(--v2-white);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-small);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  cursor: pointer;
+  box-shadow: var(--v2-glow-flow);
+}
+
+.gei-gate-simulator-link:hover {
+  filter: brightness(1.08);
+  box-shadow: var(--v2-glow-release);
+}
+
+/* --------------------------------------------------------------------------
+   6. MOBILE + REDUCED MOTION
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  #screen-academy .gei-dam-gate {
+    padding: var(--v2-s4);
+  }
+
+  #screen-academy .gei-dam-gate-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #screen-academy .gei-dam-gate-state {
+    min-height: 34px;
+  }
+
+  #screen-academy .gei-dam-gate-body {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: var(--v2-s4);
+  }
+
+  #screen-academy .gei-dam-gate-icon {
+    min-height: 128px;
+  }
+
+  #screen-academy .gei-dam-gate-checks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #screen-academy .gei-dam-gate-next {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--v2-s2);
+  }
+
+  #screen-academy .gei-dam-gate-next strong {
+    text-align: left;
+  }
+
+  .gei-gate-ceremony-dialog {
+    max-height: calc(100dvh - var(--v2-s5));
+    padding: var(--v2-s5);
+  }
+
+  .gei-gate-ceremony-dialog::after {
+    top: var(--v2-s5);
+    right: var(--v2-s5);
+  }
+
+  .gei-gate-ceremony-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  #screen-academy .gei-dam-gate-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #screen-academy .gei-dam-gate-icon {
+    width: 100%;
+    min-height: 112px;
+  }
+
+  .gei-gate-ceremony-dialog {
+    padding: var(--v2-s4);
+  }
+}
+
+@keyframes v2-dam-flow-pass {
+  from { transform: translateX(-165%) skewX(-20deg); }
+  to { transform: translateX(500%) skewX(-20deg); }
+}
+
+@keyframes v2-dam-gate-lift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-16px); }
+}
+
+@keyframes v2-dam-release-in {
+  from { opacity: 0; transform: translateY(var(--v2-s5)) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #screen-academy .gei-dam-gate-open::before,
+  .gei-gate-success-mark::before,
+  .gei-gate-success-mark::after,
+  .gei-gate-success-dialog {
+    animation: none;
+  }
+
+  #screen-academy .gei-dam-gate-open,
+  .gei-gate-simulator-link {
+    transition: none;
+  }
+
+  #screen-academy .gei-dam-gate-open:hover {
+    transform: none;
+    filter: none;
+  }
+}
