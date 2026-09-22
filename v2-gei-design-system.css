@@ -1,0 +1,632 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — GEI DESIGN SYSTEM
+   ----------------------------------------------------------------------------
+   Visual layer only. This file defines tokens and reusable instrument
+   primitives. It contains no JavaScript and overrides no logic.
+
+   Load order matters: v2 sheets are appended AFTER the V1 stylesheets so they
+   win the cascade without editing them.
+
+   Design thesis: the interface IS the machine. Structural grid, measurement
+   ticks, chamfered instrument panels, monospace telemetry. Cyan / indigo /
+   magenta are signal colours on near-black, never decorative gradient wash.
+   ========================================================================== */
+
+:root {
+  /* ---- depth ---------------------------------------------------------- */
+  --v2-void:      #04050a;
+  --v2-bg:        #06070d;
+  --v2-surface:   #0a0d16;
+  --v2-elevated:  #0f1420;
+  --v2-line:      #1b2434;
+
+  /* ---- text ----------------------------------------------------------- */
+  --v2-text:      #eaf2ff;
+  --v2-muted:     #8fa2bd;
+  --v2-white:     #ffffff;
+
+  /* ---- signal --------------------------------------------------------- */
+  --v2-cyan:        #2fd2ff;   /* flow, active, primary */
+  --v2-cyan-foam:   #7fe9ff;
+  --v2-cyan-deep:   #12657f;
+  --v2-cyan-abyss:  #0b3a4d;
+  --v2-indigo:      #3d3dea;   /* structure */
+  --v2-magenta:     #f310ba;   /* pressure, milestone */
+  --v2-hotpink:     #ff1493;
+
+  /* ---- status --------------------------------------------------------- */
+  --v2-success:   #22c55e;
+  --v2-warning:   #f5a524;
+  --v2-danger:    #ff3b5c;
+
+  /* ---- alpha washes (derived, never new hues) ------------------------- */
+  --v2-wash-cyan:    rgba(47, 210, 255, 0.10);
+  --v2-wash-cyan-2:  rgba(47, 210, 255, 0.22);
+  --v2-wash-indigo:  rgba(61, 61, 234, 0.16);
+  --v2-wash-magenta: rgba(243, 16, 186, 0.12);
+  --v2-hairline:     rgba(255, 255, 255, 0.06);
+  --v2-hairline-2:   rgba(255, 255, 255, 0.11);
+
+  /* ---- typography ----------------------------------------------------- */
+  --v2-font-display: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --v2-font-body:    'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --v2-font-mono:    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Readability floor is 12px. No exceptions, enforced by the harness. */
+  --v2-t-micro:   12px;   /* smallest permitted size */
+  --v2-t-label:   12px;
+  --v2-t-small:   13px;
+  --v2-t-body:    15px;
+  --v2-t-lead:    17px;
+  --v2-t-h3:      20px;
+  --v2-t-h2:      26px;
+  --v2-t-h1:      clamp(30px, 8vw, 44px);
+  --v2-t-display: clamp(38px, 11vw, 64px);
+
+  --v2-lh-tight:  1.08;
+  --v2-lh-body:   1.5;
+  --v2-track-label: 0.14em;
+
+  /* ---- spacing -------------------------------------------------------- */
+  --v2-s1: 4px;  --v2-s2: 8px;  --v2-s3: 12px; --v2-s4: 16px;
+  --v2-s5: 20px; --v2-s6: 24px; --v2-s7: 32px; --v2-s8: 40px;
+  --v2-s9: 48px; --v2-s10: 64px;
+
+  /* ---- radius (39 legacy values collapse to 4) ------------------------ */
+  --v2-r-sharp: 4px;
+  --v2-r-instr: 8px;
+  --v2-r-panel: 14px;
+  --v2-r-pill:  999px;
+
+  /* ---- border --------------------------------------------------------- */
+  --v2-bw:      1px;
+  --v2-bw-struct: 2px;
+
+  /* ---- elevation ------------------------------------------------------ */
+  --v2-shadow-1: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 2px 8px rgba(0, 0, 0, 0.4);
+  --v2-shadow-2: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 10px 28px rgba(0, 0, 0, 0.5);
+  --v2-shadow-3: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  /* ---- glow: always state, never decoration --------------------------- */
+  --v2-glow-idle:     0 0 0 rgba(47, 210, 255, 0);
+  --v2-glow-flow:     0 0 18px rgba(47, 210, 255, 0.22);
+  --v2-glow-pressure: 0 0 22px rgba(243, 16, 186, 0.28);
+  --v2-glow-release:  0 0 30px rgba(47, 210, 255, 0.34), 0 0 60px rgba(61, 61, 234, 0.2);
+
+  /* ---- motion --------------------------------------------------------- */
+  --v2-d1: 120ms;
+  --v2-d2: 180ms;
+  --v2-d3: 260ms;
+  --v2-d4: 420ms;
+  --v2-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ---- tap target floor ----------------------------------------------- */
+  --v2-tap: 48px;
+
+  /* ---- structure ------------------------------------------------------ */
+  --v2-grid-line: rgba(47, 210, 255, 0.045);
+  --v2-tick: rgba(143, 162, 189, 0.28);
+}
+
+/* Breakpoints used across V2 (documented, applied literally):
+     <=360px   smallest phones
+     <=420px   phones
+     <=520px   large phones / small tablets
+     <=768px   tablets
+     >=1024px  desktop
+   These replace the legacy ad-hoc 340/360/420/430/520/560/600/620/820/850 set. */
+
+
+/* ==========================================================================
+   1. GLOBAL SURFACE — dark hydraulic identity
+   ========================================================================== */
+
+html { background: var(--v2-void); }
+
+body {
+  background:
+    linear-gradient(180deg, rgba(47, 210, 255, 0.035) 0%, rgba(4, 5, 10, 0) 42%),
+    repeating-linear-gradient(0deg,   var(--v2-grid-line) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg,  var(--v2-grid-line) 0 1px, transparent 1px 32px),
+    var(--v2-bg);
+  color: var(--v2-text);
+  font-family: var(--v2-font-body);
+  font-size: var(--v2-t-body);
+  line-height: var(--v2-lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Default the skin variables to the hydraulic palette so a page is dark before
+   skin.js runs and on pages that never load skin.js (Day pages, Simulator). */
+:root {
+  --skin-bg:     var(--v2-bg);
+  --skin-surface: var(--v2-surface);
+  --skin-soft:   var(--v2-elevated);
+  --skin-text:   var(--v2-text);
+  --skin-muted:  var(--v2-muted);
+  --skin-accent: var(--v2-cyan);
+}
+
+
+/* ==========================================================================
+   2. TYPE PRIMITIVES
+   ========================================================================== */
+
+.v2-display,
+.v2-h1 {
+  font-family: var(--v2-font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: var(--v2-lh-tight);
+}
+.v2-display { font-size: var(--v2-t-display); }
+.v2-h1 { font-size: var(--v2-t-h1); }
+.v2-h2 { font-size: var(--v2-t-h2); font-weight: 800; letter-spacing: -0.02em; line-height: 1.14; }
+.v2-h3 { font-size: var(--v2-t-h3); font-weight: 700; letter-spacing: -0.01em; line-height: 1.24; }
+
+.v2-lead { font-size: var(--v2-t-lead); line-height: var(--v2-lh-body); color: var(--v2-text); }
+.v2-body { font-size: var(--v2-t-body); line-height: var(--v2-lh-body); color: var(--v2-muted); }
+
+/* Instrument label: the small caps rail above every readout. */
+.v2-label {
+  display: block;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+.v2-label--signal { color: var(--v2-cyan); }
+.v2-label--pressure { color: var(--v2-magenta); }
+
+/* Telemetry: every number in the product is monospace + tabular. */
+.v2-readout-value,
+.v2-num {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.01em;
+}
+
+
+/* ==========================================================================
+   3. PANEL — the base instrument surface
+   ========================================================================== */
+
+.v2-panel {
+  position: relative;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-panel);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0) 90px),
+    var(--v2-surface);
+  box-shadow: var(--v2-shadow-2);
+}
+
+/* Chamfered corner: reads as machined metal rather than a soft card. */
+.v2-panel--chamfer {
+  border-radius: var(--v2-r-sharp);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+/* Structural variant: heavier frame for primary instruments. */
+.v2-panel--struct { border-width: var(--v2-bw-struct); border-color: var(--v2-wash-cyan-2); }
+
+.v2-panel--flow    { box-shadow: var(--v2-shadow-2), var(--v2-glow-flow); }
+.v2-panel--pressure{ box-shadow: var(--v2-shadow-2), var(--v2-glow-pressure); }
+
+/* Header rail: label left, live value right, hairline beneath. */
+.v2-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--v2-s3);
+  padding: var(--v2-s3) var(--v2-s4);
+  border-bottom: var(--v2-bw) solid var(--v2-line);
+}
+.v2-panel-body { padding: var(--v2-s4); }
+
+/* Corner ticks: the engineering-drawing motif. */
+.v2-ticked::before,
+.v2-ticked::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  pointer-events: none;
+}
+.v2-ticked::before { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+.v2-ticked::after  { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+
+
+/* ==========================================================================
+   4. READOUT — a single telemetry cell
+   ========================================================================== */
+
+.v2-readout {
+  display: grid;
+  gap: var(--v2-s1);
+  min-width: 0;
+  padding: var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+}
+.v2-readout strong {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-h3);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--v2-text);
+}
+.v2-readout--flow     strong { color: var(--v2-cyan); }
+.v2-readout--pressure strong { color: var(--v2-magenta); }
+.v2-readout--ok       strong { color: var(--v2-success); }
+.v2-readout--warn     strong { color: var(--v2-warning); }
+
+.v2-readout-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--v2-s2);
+}
+
+
+/* ==========================================================================
+   5. CHANNEL — the continuous flow spine
+   ========================================================================== */
+
+.v2-channel {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background:
+    repeating-linear-gradient(90deg, var(--v2-tick) 0 1px, transparent 1px 8px),
+    var(--v2-void);
+}
+.v2-channel-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan));
+  box-shadow: 0 0 14px rgba(47, 210, 255, 0.4);
+  transition: width var(--v2-d4) var(--v2-ease);
+}
+.v2-channel--pressure .v2-channel-fill {
+  background: linear-gradient(90deg, var(--v2-cyan-deep), var(--v2-magenta));
+  box-shadow: 0 0 14px rgba(243, 16, 186, 0.4);
+}
+/* Measurement ticks under a channel. */
+.v2-channel-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--v2-s1);
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-micro);
+  color: var(--v2-muted);
+}
+
+
+/* ==========================================================================
+   6. GAUGE — arc instrument
+   ========================================================================== */
+
+.v2-gauge {
+  --v2-gauge-value: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 220deg,
+      var(--v2-cyan) calc(var(--v2-gauge-value) * 1%),
+      var(--v2-line) 0
+    );
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 59%);
+  mask: radial-gradient(circle, transparent 58%, #000 59%);
+}
+.v2-gauge--pressure {
+  background:
+    conic-gradient(
+      from 220deg,
+      var(--v2-magenta) calc(var(--v2-gauge-value) * 1%),
+      var(--v2-line) 0
+    );
+}
+.v2-gauge-readout {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-h3);
+  font-weight: 700;
+  color: var(--v2-text);
+}
+
+
+/* ==========================================================================
+   7. BUTTONS — 48px minimum tap target
+   ========================================================================== */
+
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--v2-s2);
+  min-height: var(--v2-tap);
+  padding: var(--v2-s3) var(--v2-s5);
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+  color: var(--v2-text);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-body);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--v2-d1) var(--v2-ease),
+              border-color var(--v2-d2) var(--v2-ease),
+              box-shadow var(--v2-d2) var(--v2-ease),
+              background var(--v2-d2) var(--v2-ease);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.v2-btn:hover { border-color: var(--v2-cyan); box-shadow: var(--v2-glow-flow); }
+.v2-btn:active { transform: translateY(1px); }
+.v2-btn:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+
+.v2-btn--primary {
+  border-color: var(--v2-cyan);
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.2), rgba(61, 61, 234, 0.18));
+  color: var(--v2-white);
+  box-shadow: var(--v2-glow-flow);
+}
+.v2-btn--primary:hover { box-shadow: var(--v2-glow-release); }
+
+.v2-btn--pressure {
+  border-color: var(--v2-magenta);
+  background: linear-gradient(160deg, rgba(243, 16, 186, 0.22), rgba(255, 20, 147, 0.12));
+  color: var(--v2-white);
+  box-shadow: var(--v2-glow-pressure);
+}
+
+.v2-btn--ghost { background: transparent; border-color: var(--v2-line); color: var(--v2-muted); }
+.v2-btn--ghost:hover { color: var(--v2-text); border-color: var(--v2-hairline-2); box-shadow: none; }
+
+.v2-btn--danger { border-color: var(--v2-danger); color: var(--v2-danger); background: transparent; }
+
+.v2-btn[disabled],
+.v2-btn[aria-disabled="true"] {
+  opacity: 0.42;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Full-width action row for mobile. */
+.v2-btn-block { display: flex; width: 100%; }
+
+
+/* ==========================================================================
+   8. BADGES
+   ========================================================================== */
+
+.v2-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--v2-s2);
+  padding: var(--v2-s1) var(--v2-s3);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp);
+  background: var(--v2-elevated);
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+.v2-badge--mastery  { border-color: var(--v2-wash-cyan-2); color: var(--v2-cyan); }
+.v2-badge--streak   { border-color: rgba(245, 165, 36, 0.4); color: var(--v2-warning); }
+.v2-badge--final    { border-color: rgba(243, 16, 186, 0.45); color: var(--v2-magenta); }
+.v2-badge--live     { border-color: var(--v2-success); color: var(--v2-success); }
+.v2-badge--locked   { opacity: 0.55; }
+
+/* Live status dot. */
+.v2-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: var(--v2-cyan);
+  box-shadow: 0 0 10px rgba(47, 210, 255, 0.8);
+}
+.v2-dot--idle    { background: var(--v2-muted); box-shadow: none; }
+.v2-dot--live    { background: var(--v2-success); box-shadow: 0 0 10px rgba(34, 197, 94, 0.8); }
+.v2-dot--pressure{ background: var(--v2-magenta); box-shadow: 0 0 10px rgba(243, 16, 186, 0.8); }
+
+
+/* ==========================================================================
+   9. STAGE NODE — one stop on the six-stage hydraulic path
+   ========================================================================== */
+
+.v2-stage-node {
+  position: relative;
+  display: grid;
+  gap: var(--v2-s2);
+  padding: var(--v2-s4);
+  border: var(--v2-bw) solid var(--v2-line);
+  border-left: 3px solid var(--v2-line);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-surface);
+  text-decoration: none;
+  color: var(--v2-text);
+  transition: border-color var(--v2-d2) var(--v2-ease), background var(--v2-d2) var(--v2-ease);
+}
+.v2-stage-node:hover { border-color: var(--v2-wash-cyan-2); background: var(--v2-elevated); }
+.v2-stage-node:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+.v2-stage-node--current {
+  border-left-color: var(--v2-cyan);
+  box-shadow: var(--v2-glow-flow);
+}
+.v2-stage-node--complete { border-left-color: var(--v2-success); }
+.v2-stage-node--locked { opacity: 0.5; }
+
+
+/* ==========================================================================
+   10. DIALOG
+   ========================================================================== */
+
+.v2-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--v2-s4);
+  background: rgba(4, 5, 10, 0.86);
+}
+.v2-dialog-card {
+  width: min(100%, 460px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: var(--v2-s6);
+  border: var(--v2-bw-struct) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-panel);
+  background: var(--v2-elevated);
+  box-shadow: var(--v2-shadow-3);
+}
+.v2-dialog[hidden] { display: none; }
+
+
+/* ==========================================================================
+   11. UTILITIES
+   ========================================================================== */
+
+.v2-stack   { display: grid; gap: var(--v2-s4); }
+.v2-stack-s { display: grid; gap: var(--v2-s2); }
+.v2-stack-l { display: grid; gap: var(--v2-s6); }
+.v2-row     { display: flex; align-items: center; gap: var(--v2-s3); }
+.v2-between { display: flex; align-items: center; justify-content: space-between; gap: var(--v2-s3); }
+
+.v2-rule {
+  height: var(--v2-bw);
+  border: 0;
+  background:
+    repeating-linear-gradient(90deg, var(--v2-line) 0 6px, transparent 6px 12px);
+}
+
+/* Measurement ruler: a decorative-but-meaningful tick strip. */
+.v2-ruler {
+  height: 14px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--v2-tick) 0 1px, transparent 1px 10px,
+    var(--v2-tick) 10px 11px, transparent 11px 50px
+  );
+  opacity: 0.6;
+}
+
+.v2-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ==========================================================================
+   12. MOTION — state only
+   ========================================================================== */
+
+@keyframes v2-flow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+@keyframes v2-pressure-rise {
+  from { transform: translateY(4px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+@keyframes v2-gate-travel {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+.v2-anim-flow     { animation: v2-flow-pulse 2.4s var(--v2-ease) infinite; }
+.v2-anim-rise     { animation: v2-pressure-rise var(--v2-d3) var(--v2-ease) both; }
+.v2-anim-gate     { animation: v2-gate-travel var(--v2-d4) var(--v2-ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-anim-flow,
+  .v2-anim-rise,
+  .v2-anim-gate { animation: none; }
+  .v2-channel-fill,
+  .v2-btn { transition: none; }
+}
+
+
+/* ==========================================================================
+   13. RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 420px) {
+  :root {
+    --v2-t-h2: 23px;
+    --v2-t-h3: 19px;
+    --v2-t-lead: 16px;
+  }
+  .v2-panel-body { padding: var(--v2-s3); }
+  .v2-readout-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-gauge { width: 92px; height: 92px; }
+}
+
+@media (max-width: 360px) {
+  .v2-readout-row { grid-template-columns: minmax(0, 1fr); }
+  .v2-dialog-card { padding: var(--v2-s4); }
+}
+
+@media (min-width: 1024px) {
+  .v2-readout-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+
+/* ==========================================================================
+   14. GEI HYDRAULIC SKIN — the V2 default identity
+   --------------------------------------------------------------------------
+   skin.js registers "gei-hydraulic" as the first skin and the new default.
+   The four original skins (academic, pink, blue, green, dark) remain fully
+   selectable and gei-academy-skin-v1 is untouched, so a learner who already
+   chose one keeps it. Only the default changed.
+   ========================================================================== */
+
+:root[data-skin="gei-hydraulic"] .app-frame {
+  background:
+    linear-gradient(180deg, var(--v2-elevated) 0%, var(--v2-bg) 42%, var(--v2-void) 100%) !important;
+}
+
+:root[data-skin="gei-hydraulic"] .app-shell::after {
+  border-color: var(--v2-hairline);
+}
+
+/* Swatch in the skin picker. */
+.skin-swatch-gei-hydraulic {
+  background: linear-gradient(135deg, #2fd2ff, #3d3dea 52%, #04050a) !important;
+  box-shadow: inset 0 0 0 1px rgba(47, 210, 255, 0.5);
+}
