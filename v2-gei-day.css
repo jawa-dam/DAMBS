@@ -1,0 +1,460 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 6: DAY PAGES
+   ----------------------------------------------------------------------------
+   Six stages of one engineering investigation. Targets day-1..6.html:
+     main.day-app[data-gei-day]
+       header.day-top (a.day-back + img.day-mascot)
+       span.day-kicker / h1.day-title / p.day-subtitle
+       section.day-hero (span.day-lesson-label, h2, p)
+       section.day-grid > article.day-card
+       section.audio-card.day-card (audio#day-audio, .audio-meta)
+       section#day-objective-mastery-root > section.v1-49-day-objective-mastery
+       section.completion (#completion-status, #day-complete)
+       nav.day-nav / footer.day-footer
+
+   The objective-mastery panel injects its own LIGHT styles (white background,
+   dark slate text) via ensureStyles() in v1-49-day-objective-mastery.js, so a
+   white card sat on a near-black page. It is re-skinned to the hydraulic palette
+   here. Its questions, answers, scoring and XP are untouched.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PAGE SHELL
+   -------------------------------------------------------------------------- */
+
+html[data-gei-day],
+.day-app { color: var(--v2-text); }
+
+.day-app {
+  width: min(760px, 100%) !important;
+  gap: var(--v2-s4) !important;
+  padding: var(--v2-s4) var(--v2-s4) calc(var(--v2-s7) + env(safe-area-inset-bottom)) !important;
+}
+
+.day-top { gap: var(--v2-s3); }
+
+.day-back,
+.day-nav a {
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s3) var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-surface) !important;
+  color: var(--v2-text) !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  text-decoration: none;
+  transition: border-color var(--v2-d2) var(--v2-ease), background var(--v2-d2) var(--v2-ease);
+}
+.day-back:hover, .day-nav a:hover {
+  border-color: var(--v2-wash-cyan-2) !important;
+  background: var(--v2-elevated) !important;
+  transform: none !important;
+}
+.day-back:focus-visible, .day-nav a:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+.day-nav a.next { border-color: var(--v2-wash-cyan-2) !important; color: var(--v2-cyan) !important; }
+
+/* Adam in the day header: framed, never overlapping the title. */
+.day-mascot {
+  width: 72px !important;
+  height: 72px !important;
+  flex: 0 0 72px;
+  padding: 4px;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-instr);
+  background: var(--v2-elevated);
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+}
+
+
+/* --------------------------------------------------------------------------
+   2. MASTHEAD + HERO
+   -------------------------------------------------------------------------- */
+
+.day-kicker {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan);
+}
+.day-title {
+  margin: var(--v2-s2) 0 0 !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-display) !important;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: var(--v2-lh-tight);
+  color: var(--v2-text);
+}
+.day-subtitle {
+  margin: var(--v2-s3) 0 0 !important;
+  font-size: var(--v2-t-lead) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+.day-hero,
+.day-card {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-1) !important;
+}
+.day-hero {
+  border-left: 3px solid var(--v2-cyan);
+  background:
+    linear-gradient(150deg, rgba(47, 210, 255, 0.08), rgba(4, 5, 10, 0)),
+    var(--v2-surface) !important;
+}
+.day-lesson-label {
+  padding: var(--v2-s1) var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-sharp) !important;
+  background: transparent !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  color: var(--v2-cyan) !important;
+}
+.day-hero h2 {
+  margin: var(--v2-s3) 0 var(--v2-s2) !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--v2-text);
+}
+.day-hero p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+.day-card h3,
+.audio-card h3 {
+  margin: 0 0 var(--v2-s2) !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+.day-card p {
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   3. PROGRESS HUD + AUDIO
+   -------------------------------------------------------------------------- */
+
+.day-progress-hud {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+}
+.day-progress-label {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-muted) !important;
+}
+.day-progress-value {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--v2-t-label) !important;
+  color: var(--v2-cyan) !important;
+}
+.day-progress-track {
+  height: 10px !important;
+  border: var(--v2-bw) solid var(--v2-line);
+  border-radius: var(--v2-r-sharp) !important;
+  background:
+    repeating-linear-gradient(90deg, var(--v2-tick) 0 1px, transparent 1px 8px),
+    var(--v2-void) !important;
+}
+.day-progress-fill {
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan)) !important;
+  box-shadow: 0 0 12px rgba(47, 210, 255, 0.4);
+}
+.day-step { background: var(--v2-line) !important; }
+.day-step.is-current { background: var(--v2-cyan) !important; }
+.day-step.is-complete { background: var(--v2-success) !important; }
+
+.audio-card audio {
+  width: 100%;
+  min-height: 44px !important;
+}
+.audio-meta {
+  font-size: var(--v2-t-small) !important;
+  color: var(--v2-muted) !important;
+}
+.audio-progress {
+  height: 8px !important;
+  border-radius: var(--v2-r-sharp) !important;
+  background: var(--v2-void) !important;
+}
+.audio-progress-fill {
+  background: linear-gradient(90deg, var(--v2-cyan), var(--v2-indigo)) !important;
+}
+.audio-resume {
+  min-height: var(--v2-tap) !important;
+  font-size: var(--v2-t-small) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+  color: var(--v2-cyan) !important;
+}
+.audio-resume:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+
+/* --------------------------------------------------------------------------
+   4. OBJECTIVE MASTERY — re-skinned from light to hydraulic
+   -------------------------------------------------------------------------- */
+
+.v1-49-day-objective-mastery {
+  margin: 0 0 var(--v2-s3) !important;
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw-struct) solid var(--v2-wash-cyan-2) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: var(--v2-surface) !important;
+  box-shadow: var(--v2-shadow-2) !important;
+}
+
+.v1-49-mastery-kicker {
+  font-size: var(--v2-t-label) !important;
+  letter-spacing: 0.1em;
+  color: var(--v2-cyan) !important;
+}
+.v1-49-mastery-head h2 {
+  margin: var(--v2-s2) 0 0 !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h2) !important;
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--v2-text) !important;
+}
+/* Was 8px at <=420px. That is the smallest text anywhere in the product. */
+.v1-49-mastery-badge {
+  padding: var(--v2-s1) var(--v2-s2) !important;
+  border: var(--v2-bw) solid var(--v2-wash-cyan-2);
+  border-radius: var(--v2-r-sharp) !important;
+  background: transparent !important;
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 700;
+  color: var(--v2-cyan) !important;
+}
+.v1-49-mastery-copy {
+  margin: var(--v2-s3) 0 !important;
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body) !important;
+  color: var(--v2-muted) !important;
+}
+
+.v1-49-mastery-progress {
+  margin: 0 0 var(--v2-s3) !important;
+  padding: var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+}
+.v1-49-mastery-progress > div {
+  font-size: var(--v2-t-small) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted) !important;
+}
+.v1-49-mastery-progress b {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--v2-cyan) !important;
+}
+.v1-49-mastery-bar {
+  height: 8px !important;
+  border-radius: var(--v2-r-sharp) !important;
+  background: var(--v2-void) !important;
+}
+.v1-49-mastery-bar i {
+  background: linear-gradient(90deg, var(--v2-indigo), var(--v2-cyan)) !important;
+  box-shadow: 0 0 10px rgba(47, 210, 255, 0.4);
+}
+
+.v1-49-question-meta {
+  font-size: var(--v2-t-small) !important;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted) !important;
+}
+.v1-49-question-meta b {
+  font-family: var(--v2-font-mono);
+  color: var(--v2-cyan) !important;
+}
+#v1-49-question h3 {
+  margin: 0 0 var(--v2-s3) !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-h3) !important;
+  font-weight: 700;
+  line-height: 1.32 !important;
+  color: var(--v2-text) !important;
+}
+
+.v1-49-choices { gap: var(--v2-s2) !important; }
+#v1-49-question .v1-49-choices button {
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s3) var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: var(--v2-elevated) !important;
+  color: var(--v2-text) !important;
+  font-size: var(--v2-t-body) !important;
+  line-height: 1.35 !important;
+  font-weight: 700;
+}
+#v1-49-question .v1-49-choices button:hover:not(:disabled) { border-color: var(--v2-wash-cyan-2); }
+#v1-49-question .v1-49-choices button:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 2px; }
+
+/* Correct / incorrect keep their meaning, recoloured to the V2 status tokens. */
+#v1-49-question .v1-49-choices button.gei-answer-correct {
+  border-color: var(--v2-success) !important;
+  background: rgba(34, 197, 94, 0.14) !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16) !important;
+}
+#v1-49-question .v1-49-choices button.gei-answer-wrong {
+  border-color: var(--v2-danger) !important;
+  background: rgba(255, 59, 92, 0.12) !important;
+  box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.14) !important;
+}
+#v1-49-question .v1-49-feedback {
+  min-height: 22px;
+  margin: var(--v2-s3) 0 0 !important;
+  font-size: var(--v2-t-small) !important;
+  font-weight: 700;
+  color: var(--v2-cyan) !important;
+}
+
+.v1-49-complete {
+  padding: var(--v2-s3) !important;
+  border: var(--v2-bw) solid var(--v2-success);
+  border-radius: var(--v2-r-instr) !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+}
+.v1-49-complete > span {
+  width: 34px !important;
+  height: 34px !important;
+  background: var(--v2-success) !important;
+  color: var(--v2-void) !important;
+}
+.v1-49-complete strong { font-size: var(--v2-t-body) !important; color: var(--v2-text) !important; }
+.v1-49-complete small { font-size: var(--v2-t-small) !important; color: var(--v2-muted) !important; }
+
+
+/* --------------------------------------------------------------------------
+   5. COMPLETION + FOOTER
+   -------------------------------------------------------------------------- */
+
+.completion {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  border-left: 3px solid var(--v2-magenta);
+  border-radius: var(--v2-r-panel) !important;
+  background:
+    linear-gradient(150deg, rgba(243, 16, 186, 0.1), rgba(4, 5, 10, 0)),
+    var(--v2-surface) !important;
+}
+.completion.is-ready {
+  border-color: var(--v2-wash-cyan-2) !important;
+  border-left-color: var(--v2-cyan);
+  box-shadow: var(--v2-glow-flow) !important;
+}
+.completion-status {
+  margin-bottom: var(--v2-s3) !important;
+  font-size: var(--v2-t-body) !important;
+  line-height: var(--v2-lh-body);
+  color: var(--v2-text) !important;
+}
+.completion button {
+  width: 100%;
+  min-height: var(--v2-tap) !important;
+  border: var(--v2-bw) solid var(--v2-cyan) !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: linear-gradient(160deg, rgba(47, 210, 255, 0.22), rgba(61, 61, 234, 0.2)) !important;
+  color: var(--v2-white) !important;
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-body) !important;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: var(--v2-glow-flow);
+}
+.completion button:focus-visible { outline: 3px solid var(--v2-cyan); outline-offset: 3px; }
+.completion button:disabled { opacity: 0.4; box-shadow: none; }
+.completion button.is-complete {
+  border-color: var(--v2-success) !important;
+  background: linear-gradient(160deg, rgba(34, 197, 94, 0.24), rgba(47, 210, 255, 0.16)) !important;
+}
+
+.v1-43-completion-result {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid var(--v2-success) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+}
+.v1-43-completion-headline { font-size: var(--v2-t-lead) !important; color: var(--v2-text) !important; }
+.v1-43-completion-copy { font-size: var(--v2-t-body) !important; color: var(--v2-muted) !important; }
+.v1-43-next-cta, .v1-43-academy-cta {
+  min-height: var(--v2-tap) !important;
+  border-radius: var(--v2-r-instr) !important;
+  font-size: var(--v2-t-body) !important;
+}
+.v1-43-academy-cta {
+  border: var(--v2-bw) solid var(--v2-line) !important;
+  background: var(--v2-elevated) !important;
+  color: var(--v2-text) !important;
+}
+
+.day4-audio-diagnostics {
+  padding: var(--v2-s4) !important;
+  border: var(--v2-bw) solid rgba(243, 16, 186, 0.4) !important;
+  border-radius: var(--v2-r-panel) !important;
+  background: rgba(243, 16, 186, 0.1) !important;
+  font-size: var(--v2-t-body) !important;
+  color: var(--v2-text) !important;
+}
+.day4-audio-diagnostics pre {
+  font-size: var(--v2-t-label) !important;
+  background: var(--v2-void) !important;
+  color: var(--v2-muted) !important;
+}
+
+.day-footer {
+  font-size: var(--v2-t-small) !important;
+  line-height: 1.45;
+  color: var(--v2-muted) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  .day-app { padding-inline: var(--v2-s3) !important; }
+  .day-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .day-title { font-size: clamp(34px, 10vw, 46px) !important; }
+  .day-mascot { width: 62px !important; height: 62px !important; flex-basis: 62px; }
+}
+
+@media (max-width: 360px) {
+  .v1-43-completion-actions { grid-template-columns: minmax(0, 1fr) !important; }
+  .audio-actions { flex-direction: column; align-items: stretch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day-mascot { animation: none !important; }
+  .day-progress-fill, .audio-progress-fill, .v1-49-mastery-bar i { transition: none !important; }
+  .completion button, .day-back, .day-nav a { transition: none !important; }
+}
