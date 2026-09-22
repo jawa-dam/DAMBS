@@ -1,0 +1,182 @@
+/* ============================================================================
+   YALLTOO VISUAL REMIX V2 — PHASE 3: SHELL & NAVIGATION
+   ----------------------------------------------------------------------------
+   The instrument chassis: app frame, screen containers, bottom navigation.
+   Visual only. No markup is removed, no control is hidden, no tap target is
+   made smaller. Every V1 hook below was read from the rendered DOM.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. FRAME — kill the decorative blobs, add structure
+   --------------------------------------------------------------------------
+   .shell-glow-cyan was using var(--pink) and .shell-glow-magenta var(--magenta):
+   two blurred colour blobs floating behind the content. That is exactly the
+   "random glowing blob" the brief rules out, so they are retired in favour of a
+   measurable structure: conduit lines and a corner-ticked frame. */
+
+.shell-glow { display: none !important; }
+
+.app-frame {
+  background:
+    linear-gradient(180deg, var(--v2-elevated) 0%, var(--v2-bg) 38%, var(--v2-void) 100%) !important;
+}
+
+.app-shell::before {
+  background:
+    repeating-linear-gradient(90deg, var(--v2-grid-line) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(0deg,  var(--v2-grid-line) 0 1px, transparent 1px 44px) !important;
+  opacity: 0.9;
+}
+
+.app-shell::after {
+  border: var(--v2-bw) solid var(--v2-hairline) !important;
+  border-radius: var(--v2-r-panel) !important;
+}
+
+/* Two vertical conduits: the water lines the whole product runs on. */
+.app-shell > .dashboard-watermark { display: none; }
+
+
+/* --------------------------------------------------------------------------
+   2. SCREEN CONTAINERS
+   -------------------------------------------------------------------------- */
+
+.app-screen.is-active {
+  color: var(--v2-text);
+}
+
+/* Consistent internal scroll so nothing escapes the viewport. */
+#screen-academy.is-active,
+#screen-portfolio.is-active,
+#screen-video.is-active,
+#screen-support.is-active {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. BOTTOM NAVIGATION — an instrument tab bar
+   -------------------------------------------------------------------------- */
+
+.bottom-navigation {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--v2-s1);
+  padding: var(--v2-s2) !important;
+  border-top: var(--v2-bw) solid var(--v2-line);
+  background:
+    linear-gradient(180deg, rgba(15, 20, 32, 0.92), rgba(4, 5, 10, 0.98)) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-button {
+  position: relative;
+  display: grid !important;
+  place-content: center;
+  justify-items: center;
+  gap: var(--v2-s1);
+  min-height: var(--v2-tap) !important;
+  padding: var(--v2-s2) var(--v2-s1) !important;
+  border: 0 !important;
+  border-radius: var(--v2-r-instr) !important;
+  background: transparent !important;
+  color: var(--v2-muted) !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--v2-d2) var(--v2-ease), background var(--v2-d2) var(--v2-ease);
+}
+
+.nav-button:focus-visible {
+  outline: 3px solid var(--v2-cyan);
+  outline-offset: -3px;
+}
+
+.nav-icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 24px;
+  font-size: 18px !important;
+  line-height: 1;
+}
+
+/* Readability floor: the V1 labels were 10px, dropping to 9px under 360px. */
+.nav-label {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* Active tab = a lit channel, not a filled pill. */
+.nav-button.active {
+  color: var(--v2-cyan) !important;
+  background: rgba(47, 210, 255, 0.08) !important;
+}
+.nav-button.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  height: 2px;
+  border-radius: 0 0 var(--v2-r-sharp) var(--v2-r-sharp);
+  background: var(--v2-cyan);
+  box-shadow: 0 0 10px rgba(47, 210, 255, 0.7);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. SHARED SCREEN CHROME (kickers, headers, stubs)
+   -------------------------------------------------------------------------- */
+
+.screen-kicker,
+.eyebrow {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: var(--v2-track-label);
+  text-transform: uppercase;
+  color: var(--v2-cyan);
+}
+
+.card-label {
+  font-family: var(--v2-font-display);
+  font-size: var(--v2-t-label) !important;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+
+.stub-screen {
+  color: var(--v2-text);
+}
+
+/* Support screen keeps its own injected styles; only lift its type floor. */
+.support-kicker { font-size: var(--v2-t-label) !important; }
+.support-email { font-size: var(--v2-t-label) !important; }
+.support-contact-copy span { font-size: var(--v2-t-label) !important; }
+.support-method span { font-size: var(--v2-t-small) !important; }
+
+
+/* --------------------------------------------------------------------------
+   5. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .nav-label { font-size: var(--v2-t-label) !important; }
+  .nav-icon { font-size: 17px !important; }
+  .bottom-navigation { gap: 2px; padding: var(--v2-s2) var(--v2-s1) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-button { transition: none; }
+}
