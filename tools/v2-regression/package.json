@@ -1,0 +1,14 @@
+{
+  "name": "yalltoo-v2-regression",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Headless regression harness proving the V2 visual remix never changes V1.63.30 protected logic.",
+  "scripts": {
+    "test": "node regression.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "css-tree": "^3.0.0"
+  }
+}
